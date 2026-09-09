@@ -46,34 +46,35 @@ export const Sparkline: React.FC<SparklineProps> = ({
 
   const colorMap = {
     terracotta: {
-      stroke: "#d9653b",
-      fillStart: "rgba(217, 101, 59, 0.28)",
-      fillEnd: "rgba(217, 101, 59, 0.0)",
+      stroke: "#B8794A",
+      fillStart: "rgba(184, 121, 74, 0.25)",
+      fillEnd: "rgba(184, 121, 74, 0.0)",
     },
     emerald: {
-      stroke: "#10b981",
-      fillStart: "rgba(16, 185, 129, 0.28)",
-      fillEnd: "rgba(16, 185, 129, 0.0)",
+      stroke: "#2A855C",
+      fillStart: "rgba(42, 133, 92, 0.25)",
+      fillEnd: "rgba(42, 133, 92, 0.0)",
     },
     gold: {
-      stroke: "#d4a359",
-      fillStart: "rgba(212, 163, 89, 0.28)",
-      fillEnd: "rgba(212, 163, 89, 0.0)",
+      stroke: "#C89B6D",
+      fillStart: "rgba(200, 155, 109, 0.25)",
+      fillEnd: "rgba(200, 155, 109, 0.0)",
     },
     cyan: {
-      stroke: "#38bdf8",
-      fillStart: "rgba(56, 189, 248, 0.28)",
-      fillEnd: "rgba(56, 189, 248, 0.0)",
+      stroke: "#0284C7",
+      fillStart: "rgba(2, 132, 199, 0.22)",
+      fillEnd: "rgba(2, 132, 199, 0.0)",
     },
     ruby: {
-      stroke: "#ef4444",
-      fillStart: "rgba(239, 68, 68, 0.28)",
-      fillEnd: "rgba(239, 68, 68, 0.0)",
+      stroke: "#C93B3B",
+      fillStart: "rgba(201, 59, 59, 0.22)",
+      fillEnd: "rgba(201, 59, 59, 0.0)",
     },
   };
 
   const theme = colorMap[color] || colorMap.emerald;
-  const gradientId = `sparkline-grad-${color}-${Math.random().toString(36).substring(2, 7)}`;
+  const rawId = React.useId();
+  const gradientId = `sparkline-grad-${color}-${rawId.replace(/:/g, "")}`;
 
   return (
     <div className={`inline-block select-none overflow-hidden ${className}`}>

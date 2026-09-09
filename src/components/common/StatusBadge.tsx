@@ -36,40 +36,40 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       case "delivered":
       case "verified":
         return {
-          bg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400",
-          dot: "bg-emerald-400",
+          bg: "bg-emerald-500/15 border-emerald-500/30 text-emerald-800 font-semibold",
+          dot: "bg-emerald-600",
         };
       case "stable":
       case "gi tagged":
         return {
-          bg: "bg-sky-500/10 border-sky-500/30 text-sky-300",
-          dot: "bg-sky-400",
+          bg: "bg-sky-500/15 border-sky-500/30 text-sky-800 font-semibold",
+          dot: "bg-sky-600",
         };
       case "vulnerable":
       case "moderate":
       case "processing":
       case "active intervention":
         return {
-          bg: "bg-amber-500/10 border-amber-500/30 text-amber-300",
-          dot: "bg-amber-400",
+          bg: "bg-amber-500/15 border-amber-500/35 text-amber-900 font-semibold",
+          dot: "bg-amber-600",
         };
       case "endangered":
       case "critical":
       case "high":
         return {
-          bg: "bg-rose-500/10 border-rose-500/30 text-rose-400",
-          dot: "bg-rose-400 animate-pulse",
+          bg: "bg-rose-500/15 border-rose-500/35 text-rose-800 font-semibold",
+          dot: "bg-rose-600 animate-pulse",
         };
       case "revived":
       case "awardee":
         return {
-          bg: "bg-amber-400/10 border-amber-400/30 text-amber-200",
-          dot: "bg-amber-300",
+          bg: "bg-[#C89B6D]/20 border-[#C89B6D]/35 text-[#8A5A2B] font-semibold",
+          dot: "bg-[#B8794A]",
         };
       default:
         return {
-          bg: "bg-white/[0.05] border-white/[0.1] text-stone-300",
-          dot: "bg-stone-400",
+          bg: "bg-[#B8794A]/10 border-[#B8794A]/20 text-[#2C221E] font-semibold",
+          dot: "bg-[#B8794A]",
         };
     }
   };
@@ -80,7 +80,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 font-medium rounded-full border backdrop-blur-sm select-none tracking-wide",
+        "inline-flex items-center gap-1.5 font-semibold rounded-full border backdrop-blur-sm select-none tracking-wide",
         sizeClasses,
         style.bg,
         className

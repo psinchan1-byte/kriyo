@@ -48,23 +48,23 @@ export default function HeritagePage() {
       badge="NATIONAL KNOWLEDGE GRAPH"
     >
       {/* Knowledge Graph Status Card */}
-      <GlassCard variant="highlighted" className="p-6 border border-heritage-gold/30">
+      <GlassCard variant="highlighted" className="p-6 border border-heritage-gold/40">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-heritage-gold/15 border border-heritage-gold/30 flex items-center justify-center text-heritage-gold shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-heritage-gold/20 border border-heritage-gold/40 flex items-center justify-center text-heritage-gold shrink-0">
               <BookOpen className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-earth-dark">
                 Intangible Cultural Heritage Knowledge Graph (ICH-KG)
               </h3>
-              <p className="text-xs text-stone-300 mt-0.5">
+              <p className="text-xs text-earth-slate mt-0.5">
                 Semantic ontologies mapping 142 GI crafts to 4,800 historical motifs, natural pigment formulas, and oral apprentice canons.
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/20 shrink-0">
-            <CheckCircle2 className="w-4 h-4" />
+          <div className="flex items-center gap-2 font-mono text-xs text-emerald-800 bg-emerald-500/15 px-3 py-1.5 rounded-lg border border-emerald-500/30 font-semibold shrink-0">
+            <CheckCircle2 className="w-4 h-4 text-emerald-700" />
             <span>100% Immutable Provenance</span>
           </div>
         </div>
@@ -74,33 +74,33 @@ export default function HeritagePage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {heritageArchives.map((archive, i) => (
           <GlassCard key={i} variant="interactive" className="p-6 space-y-4">
-            <div className="flex items-start justify-between gap-2 pb-3 border-b border-white/[0.06]">
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-[#B8794A]/12">
               <div>
-                <span className="text-[10px] font-mono text-heritage-gold uppercase tracking-wider block">
+                <span className="text-[10px] font-mono text-heritage-terracotta uppercase tracking-wider font-semibold block">
                   Heritage Entity #{i + 1}
                 </span>
-                <h4 className="text-base font-bold text-white mt-0.5">
+                <h4 className="text-base font-bold text-earth-dark mt-0.5">
                   {archive.title}
                 </h4>
               </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-white/[0.06] text-stone-300 border border-white/[0.08]">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-heritage-sand text-earth-slate border border-[#B8794A]/15">
                 {archive.giCertificate.split(" ")[0]}
               </span>
             </div>
 
             <div className="space-y-2 text-xs">
               <div>
-                <span className="text-stone-400 block text-[11px]">Historical Lineage Origin:</span>
-                <span className="text-stone-200 font-medium">{archive.origin}</span>
+                <span className="text-earth-muted block text-[11px]">Historical Lineage Origin:</span>
+                <span className="text-earth-dark font-medium">{archive.origin}</span>
               </div>
 
               <div>
-                <span className="text-stone-400 block text-[11px]">Traditional Raw Material Formula:</span>
+                <span className="text-earth-muted block text-[11px]">Traditional Raw Material Formula:</span>
                 <div className="flex items-center gap-1.5 flex-wrap mt-1">
                   {archive.materials.map((mat, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 rounded bg-obsidian-900 border border-white/[0.06] text-stone-300 font-mono text-[10px]"
+                      className="px-2 py-0.5 rounded bg-[#FFFDF8] border border-[#B8794A]/14 text-earth-slate font-mono text-[10px]"
                     >
                       {mat}
                     </span>
@@ -108,9 +108,9 @@ export default function HeritagePage() {
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-white/[0.04] flex items-center justify-between text-stone-400 font-mono text-[11px]">
+              <div className="pt-2 border-t border-[#B8794A]/12 flex items-center justify-between text-earth-muted font-mono text-[11px]">
                 <span>{archive.mastersEnrolled} Lineage Masters</span>
-                <span className="text-heritage-terracotta-light">Registry Verified</span>
+                <span className="text-heritage-terracotta font-semibold">Registry Verified</span>
               </div>
             </div>
           </GlassCard>

@@ -39,8 +39,8 @@ export default function AIPage() {
 
       {/* Active Predictive Models */}
       <div className="space-y-4 mt-6">
-        <h3 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-          <BrainCircuit className="w-4 h-4 text-heritage-terracotta-light" />
+        <h3 className="text-base font-bold text-earth-dark tracking-tight flex items-center gap-2">
+          <BrainCircuit className="w-4 h-4 text-heritage-terracotta" />
           <span>Active Predictive Machine Learning Models</span>
         </h3>
 
@@ -48,27 +48,27 @@ export default function AIPage() {
           {predictiveModels.map((model, idx) => (
             <GlassCard key={idx} variant="default" className="p-6 space-y-4 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between gap-2 pb-2 border-b border-white/[0.06]">
-                  <span className="text-[10px] font-mono uppercase text-heritage-terracotta-light">
+                <div className="flex items-center justify-between gap-2 pb-2 border-b border-[#B8794A]/12">
+                  <span className="text-[10px] font-mono uppercase text-heritage-terracotta font-semibold">
                     Model #{idx + 1}
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 font-semibold">
                     {model.accuracy} Accuracy
                   </span>
                 </div>
-                <h4 className="text-sm font-bold text-white mt-2">
+                <h4 className="text-sm font-bold text-earth-dark mt-2">
                   {model.title}
                 </h4>
-                <p className="text-xs text-stone-300 mt-1.5 leading-relaxed">
+                <p className="text-xs text-earth-slate mt-1.5 leading-relaxed">
                   {model.description}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-white/[0.06] bg-obsidian-900/60 -mx-2 -mb-2 p-3 rounded-xl">
-                <span className="text-[10px] font-mono uppercase text-heritage-gold block font-semibold">
+              <div className="pt-3 border-t border-[#B8794A]/12 bg-heritage-sand/60 -mx-2 -mb-2 p-3 rounded-xl">
+                <span className="text-[10px] font-mono uppercase text-heritage-terracotta block font-bold">
                   Autonomous Recommendation
                 </span>
-                <p className="text-xs text-stone-200 mt-0.5">
+                <p className="text-xs text-earth-dark mt-0.5 font-medium">
                   {model.recommendation}
                 </p>
               </div>

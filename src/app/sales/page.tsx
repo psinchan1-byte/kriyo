@@ -43,35 +43,35 @@ export default function SalesPage() {
       {/* 4 Financial Highlight Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <GlassCard variant="default" className="p-5">
-          <span className="text-[10px] font-mono uppercase text-stone-400 block">Gross Sales Turnover</span>
-          <div className="text-2xl font-bold text-white num-display mt-1">
+          <span className="text-[10px] font-mono uppercase text-earth-muted block">Gross Sales Turnover</span>
+          <div className="text-2xl font-bold text-earth-dark num-display mt-1">
             {formatCurrencyINR(analytics.grossRevenue)}
           </div>
-          <span className="text-[11px] text-emerald-400 mt-1 block font-mono">+24.6% vs last quarter</span>
+          <span className="text-[11px] text-emerald-700 mt-1 block font-mono font-semibold">+24.6% vs last quarter</span>
         </GlassCard>
 
         <GlassCard variant="default" className="p-5">
-          <span className="text-[10px] font-mono uppercase text-stone-400 block">Artisan Direct Payout</span>
-          <div className="text-2xl font-bold text-emerald-400 num-display mt-1">
+          <span className="text-[10px] font-mono uppercase text-earth-muted block">Artisan Direct Payout</span>
+          <div className="text-2xl font-bold text-emerald-800 num-display mt-1">
             {formatCurrencyINR(analytics.artisanDirectPayout)}
           </div>
-          <span className="text-[11px] text-stone-400 mt-1 block font-mono">80.0% Fair-Trade Escrow</span>
+          <span className="text-[11px] text-earth-muted mt-1 block font-mono">80.0% Fair-Trade Escrow</span>
         </GlassCard>
 
         <GlassCard variant="default" className="p-5">
-          <span className="text-[10px] font-mono uppercase text-stone-400 block">Total Orders Fulfilled</span>
-          <div className="text-2xl font-bold text-white num-display mt-1">
+          <span className="text-[10px] font-mono uppercase text-earth-muted block">Total Orders Fulfilled</span>
+          <div className="text-2xl font-bold text-earth-dark num-display mt-1">
             {analytics.totalOrders.toLocaleString("en-IN")}
           </div>
-          <span className="text-[11px] text-stone-400 mt-1 block font-mono">Zero chargeback incidents</span>
+          <span className="text-[11px] text-earth-muted mt-1 block font-mono">Zero chargeback incidents</span>
         </GlassCard>
 
         <GlassCard variant="default" className="p-5">
-          <span className="text-[10px] font-mono uppercase text-stone-400 block">Average Order Value (AOV)</span>
+          <span className="text-[10px] font-mono uppercase text-earth-muted block">Average Order Value (AOV)</span>
           <div className="text-2xl font-bold text-heritage-gold num-display mt-1">
             {formatCurrencyINR(analytics.averageOrderValue)}
           </div>
-          <span className="text-[11px] text-stone-400 mt-1 block font-mono">Institutional B2B uplift</span>
+          <span className="text-[11px] text-earth-muted mt-1 block font-mono">Institutional B2B uplift</span>
         </GlassCard>
       </div>
 
@@ -80,16 +80,16 @@ export default function SalesPage() {
 
       {/* Recent Orders Ledger Table */}
       <GlassCard variant="default" className="p-6">
-        <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+        <div className="flex items-center justify-between pb-4 border-b border-[#B8794A]/14">
           <div>
-            <h3 className="text-base font-semibold text-white tracking-tight">
+            <h3 className="text-base font-semibold text-earth-dark tracking-tight">
               Recent Fair-Trade Order Dispatches
             </h3>
-            <p className="text-xs text-stone-400 mt-0.5">
+            <p className="text-xs text-earth-muted mt-0.5">
               Live settlement verification with automated artisan cooperative split.
             </p>
           </div>
-          <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-white/[0.05] text-stone-300">
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-heritage-sand text-earth-slate border border-[#B8794A]/14">
             ONDC NETWORK ORDERS
           </span>
         </div>
@@ -97,7 +97,7 @@ export default function SalesPage() {
         <div className="overflow-x-auto mt-4">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-white/[0.06] text-stone-400 font-mono uppercase tracking-wider text-[10px]">
+              <tr className="border-b border-[#B8794A]/14 text-earth-muted font-mono uppercase tracking-wider text-[10px]">
                 <th className="py-3 px-3">Order Number</th>
                 <th className="py-3 px-3">Buyer & Region</th>
                 <th className="py-3 px-3">Item & Artisan Attribution</th>
@@ -106,29 +106,29 @@ export default function SalesPage() {
                 <th className="py-3 px-3 text-right">Order Total</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.04]">
+            <tbody className="divide-y divide-[#B8794A]/10">
               {recentOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-white/[0.03] transition-colors">
-                  <td className="py-3 px-3 font-mono text-heritage-terracotta-light font-medium">
+                <tr key={order.id} className="hover:bg-[#B8794A]/5 transition-colors">
+                  <td className="py-3 px-3 font-mono text-heritage-terracotta font-semibold">
                     {order.orderNumber}
                   </td>
                   <td className="py-3 px-3">
-                    <div className="font-semibold text-white">{order.customerName}</div>
-                    <div className="text-[11px] text-stone-400">{order.customerRegion}</div>
+                    <div className="font-semibold text-earth-dark">{order.customerName}</div>
+                    <div className="text-[11px] text-earth-muted">{order.customerRegion}</div>
                   </td>
                   <td className="py-3 px-3">
-                    <div className="text-stone-200">{order.items[0]?.productTitle}</div>
-                    <div className="text-[11px] text-heritage-gold">
+                    <div className="text-earth-dark font-medium">{order.items[0]?.productTitle}</div>
+                    <div className="text-[11px] text-heritage-gold font-medium">
                       Artisan: {order.items[0]?.artisanName}
                     </div>
                   </td>
-                  <td className="py-3 px-3 text-stone-400 font-mono text-[11px]">
+                  <td className="py-3 px-3 text-earth-muted font-mono text-[11px]">
                     {formatDate(order.orderDate)}
                   </td>
                   <td className="py-3 px-3">
                     <StatusBadge status={order.status} size="sm" />
                   </td>
-                  <td className="py-3 px-3 text-right font-bold text-white num-display">
+                  <td className="py-3 px-3 text-right font-bold text-earth-dark num-display">
                     {formatCurrencyINR(order.totalAmount)}
                   </td>
                 </tr>

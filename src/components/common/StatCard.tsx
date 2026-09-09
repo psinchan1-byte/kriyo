@@ -32,38 +32,38 @@ export const StatCard: React.FC<StatCardProps> = ({
   className = "",
 }) => {
   const accentTopBorders = {
-    default: "before:bg-gradient-to-r before:from-white/10 before:via-white/5 before:to-transparent",
-    terracotta: "before:bg-gradient-to-r before:from-heritage-terracotta/70 before:via-heritage-terracotta/20 before:to-transparent",
-    gold: "before:bg-gradient-to-r before:from-heritage-gold/70 before:via-heritage-gold/20 before:to-transparent",
-    emerald: "before:bg-gradient-to-r before:from-emerald-500/70 before:via-emerald-500/20 before:to-transparent",
-    ruby: "before:bg-gradient-to-r before:from-rose-500/70 before:via-rose-500/20 before:to-transparent",
+    default: "before:bg-gradient-to-r before:from-[#B96D43]/30 before:via-[#B96D43]/10 before:to-transparent",
+    terracotta: "before:bg-gradient-to-r before:from-[#B96D43] before:via-[#B96D43]/40 before:to-transparent",
+    gold: "before:bg-gradient-to-r before:from-[#B58A50] before:via-[#B58A50]/40 before:to-transparent",
+    emerald: "before:bg-gradient-to-r before:from-[#3F7A61] before:via-[#3F7A61]/40 before:to-transparent",
+    ruby: "before:bg-gradient-to-r before:from-[#A95050] before:via-[#A95050]/40 before:to-transparent",
   };
 
   const iconBgStyles = {
-    default: "bg-white/[0.05] text-stone-300 border-white/[0.08]",
-    terracotta: "bg-heritage-terracotta/15 text-heritage-terracotta-light border-heritage-terracotta/30",
-    gold: "bg-heritage-gold/15 text-heritage-gold border-heritage-gold/30",
-    emerald: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-    ruby: "bg-rose-500/15 text-rose-400 border-rose-500/30",
+    default: "bg-[#B96D43]/10 text-[#49372A] border-[#B96D43]/20",
+    terracotta: "bg-[#B96D43]/15 text-[#B96D43] border-[#B96D43]/30",
+    gold: "bg-[#B58A50]/18 text-[#8A5A2B] border-[#B58A50]/35",
+    emerald: "bg-[#3F7A61]/15 text-[#3F7A61] border-[#3F7A61]/30",
+    ruby: "bg-[#A95050]/15 text-[#A95050] border-[#A95050]/30",
   };
 
   return (
     <GlassCard
       variant="interactive"
       className={cn(
-        "p-5 relative before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px]",
+        "p-5 relative before:absolute before:top-0 before:left-0 before:right-0 before:h-[3px]",
         accentTopBorders[accentVariant],
         className
       )}
     >
       <div className="flex items-start justify-between gap-2 mb-3">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-400">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-[#9A887C]">
           {label}
         </span>
         {icon && (
           <div
             className={cn(
-              "w-7 h-7 rounded-lg flex items-center justify-center border shrink-0 transition-transform duration-200 group-hover:scale-105",
+              "w-7 h-7 rounded-xl flex items-center justify-center border shrink-0 transition-transform duration-200 group-hover:scale-105 shadow-sm",
               iconBgStyles[accentVariant]
             )}
           >
@@ -74,7 +74,7 @@ export const StatCard: React.FC<StatCardProps> = ({
 
       <div className="flex items-baseline justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-2xl lg:text-[28px] font-bold text-white tracking-tight num-display font-sans truncate">
+          <div className="text-2xl lg:text-[28px] font-black text-[#49372A] tracking-tight num-display font-sans truncate">
             {value}
           </div>
 
@@ -82,10 +82,10 @@ export const StatCard: React.FC<StatCardProps> = ({
             {change !== undefined && (
               <span
                 className={cn(
-                  "inline-flex items-center gap-0.5 text-xs font-semibold px-1.5 py-0.5 rounded",
+                  "inline-flex items-center gap-0.5 text-xs font-bold px-1.5 py-0.5 rounded-md",
                   isPositive
-                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                    : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                    ? "bg-[#3F7A61]/15 text-[#3F7A61] border border-[#3F7A61]/30"
+                    : "bg-[#A95050]/15 text-[#A95050] border border-[#A95050]/30"
                 )}
               >
                 {isPositive ? (
@@ -96,13 +96,13 @@ export const StatCard: React.FC<StatCardProps> = ({
                 {typeof change === "number" ? `${change > 0 ? "+" : ""}${change}%` : change}
               </span>
             )}
-            <span className="text-[11px] text-stone-400 tracking-normal truncate">
+            <span className="text-[11px] text-[#6E5D53] tracking-normal truncate font-medium">
               {changeLabel}
             </span>
           </div>
 
           {subtext && (
-            <p className="text-[11px] text-stone-400 mt-1 truncate">{subtext}</p>
+            <p className="text-[11px] text-[#6E5D53] mt-1 truncate font-medium">{subtext}</p>
           )}
         </div>
 

@@ -27,16 +27,16 @@ export default function GeographyPage() {
 
       {/* State-by-State Telemetry Table */}
       <GlassCard variant="default" className="p-6">
-        <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+        <div className="flex items-center justify-between pb-4 border-b border-[#B8794A]/14">
           <div>
-            <h3 className="text-base font-semibold text-white tracking-tight">
+            <h3 className="text-base font-semibold text-earth-dark tracking-tight">
               State Artisanal Concentration & Demand Indices
             </h3>
-            <p className="text-xs text-stone-400 mt-0.5">
+            <p className="text-xs text-earth-muted mt-0.5">
               Live ranking of state craft ecosystems based on active guild registrations and buyer conversion rates.
             </p>
           </div>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.05] text-stone-400">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-heritage-sand text-earth-slate border border-[#B8794A]/14">
             CENSUS 2026 AUDIT
           </span>
         </div>
@@ -44,7 +44,7 @@ export default function GeographyPage() {
         <div className="overflow-x-auto mt-4">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-white/[0.06] text-stone-400 font-mono uppercase tracking-wider text-[10px]">
+              <tr className="border-b border-[#B8794A]/14 text-earth-muted font-mono uppercase tracking-wider text-[10px]">
                 <th className="py-3 px-3">Rank & State</th>
                 <th className="py-3 px-3">Verified Artisans</th>
                 <th className="py-3 px-3">Regional Demand Index</th>
@@ -52,34 +52,34 @@ export default function GeographyPage() {
                 <th className="py-3 px-3 text-right">Ecosystem Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.04]">
+            <tbody className="divide-y divide-[#B8794A]/10">
               {stateRankings.map((row, i) => (
-                <tr key={i} className="hover:bg-white/[0.03] transition-colors">
+                <tr key={i} className="hover:bg-[#B8794A]/5 transition-colors">
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-stone-400 font-bold">0{i + 1}</span>
-                      <span className="font-semibold text-white">{row.state}</span>
+                      <span className="font-mono text-earth-muted font-bold">0{i + 1}</span>
+                      <span className="font-semibold text-earth-dark">{row.state}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-3 font-mono text-stone-200">
+                  <td className="py-3 px-3 font-mono text-earth-dark font-medium">
                     {row.artisans.toLocaleString("en-IN")}
                   </td>
                   <td className="py-3 px-3 font-mono text-heritage-gold font-bold">
                     {row.demandIndex} / 100
                   </td>
-                  <td className="py-3 px-3 text-stone-300">
+                  <td className="py-3 px-3 text-earth-slate font-medium">
                     {row.topCraft}
                   </td>
                   <td className="py-3 px-3 text-right">
                     <span
-                      className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-mono ${
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold ${
                         row.status === "Thriving"
-                          ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                          ? "bg-emerald-500/15 text-emerald-800 border border-emerald-500/30"
                           : row.status === "Stable"
-                          ? "bg-sky-500/15 text-sky-300 border border-sky-500/30"
+                          ? "bg-sky-500/15 text-sky-800 border border-sky-500/30"
                           : row.status === "Vulnerable"
-                          ? "bg-amber-500/15 text-amber-300 border border-amber-500/30"
-                          : "bg-rose-500/15 text-rose-400 border border-rose-500/30"
+                          ? "bg-amber-500/15 text-amber-800 border border-amber-500/30"
+                          : "bg-rose-500/15 text-rose-800 border border-rose-500/30"
                       }`}
                     >
                       {row.status}

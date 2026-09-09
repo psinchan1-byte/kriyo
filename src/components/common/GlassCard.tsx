@@ -16,11 +16,11 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   ...props
 }) => {
   const variantStyles = {
-    default: "bg-obsidian-850/70 backdrop-blur-xl border border-white/[0.08] shadow-glass",
-    elevated: "bg-obsidian-800/85 backdrop-blur-2xl border border-white/[0.12] shadow-glass-elevated",
-    highlighted: "bg-gradient-to-b from-heritage-terracotta/[0.08] to-obsidian-850/80 backdrop-blur-xl border border-heritage-terracotta/30 shadow-glass",
-    interactive: "bg-obsidian-850/70 backdrop-blur-xl border border-white/[0.08] hover:border-white/[0.18] hover:bg-obsidian-800/80 hover:-translate-y-0.5 hover:shadow-glass-elevated transition-all duration-300 cursor-pointer",
-    subtle: "bg-obsidian-900/40 backdrop-blur-md border border-white/[0.05]",
+    default: "bg-[#FFFDF8]/78 backdrop-blur-xl border border-[#B96D43]/14 shadow-glass",
+    elevated: "bg-[#FFFDF8]/90 backdrop-blur-2xl border border-white border-b-[#B96D43]/20 shadow-glass-elevated",
+    highlighted: "bg-gradient-to-b from-[#B96D43]/10 to-[#FFFDF8]/85 backdrop-blur-xl border border-[#B96D43]/28 shadow-glass",
+    interactive: "glass-card-interactive cursor-pointer",
+    subtle: "bg-[#EFE6D7]/50 backdrop-blur-md border border-[#B96D43]/10 shadow-sm",
   };
 
   const glowStyles = {
@@ -33,7 +33,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   return (
     <div
       className={cn(
-        "rounded-xl relative overflow-hidden transition-colors",
+        "rounded-2xl relative overflow-hidden transition-all duration-300",
         variantStyles[variant],
         glowStyles[glow],
         className

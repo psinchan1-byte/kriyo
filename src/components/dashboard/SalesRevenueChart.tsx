@@ -28,7 +28,6 @@ export const SalesRevenueChart: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(CHART_DATA.length - 1);
 
   const maxRevenue = Math.max(...CHART_DATA.map((d) => d.grossRevenue)) * 1.1;
-  const maxOrders = Math.max(...CHART_DATA.map((d) => d.orders)) * 1.15;
 
   const chartHeight = 220;
   const chartWidth = 600;
@@ -73,39 +72,39 @@ export const SalesRevenueChart: React.FC = () => {
   return (
     <GlassCard variant="default" className="p-6">
       {/* Header with Title and Metric Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/[0.08]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#B96D43]/14">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-base font-semibold text-white tracking-tight">
+            <h3 className="text-base font-bold text-[#49372A] tracking-tight">
               Fair-Trade Commerce & Revenue Telemetry
             </h3>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#3F7A61]/15 text-[#3F7A61] border border-[#3F7A61]/30">
               80.0% DIRECT ARTISAN PAYOUT
             </span>
           </div>
-          <p className="text-xs text-stone-400 mt-1">
+          <p className="text-xs text-[#6E5D53] mt-1 font-medium">
             Tracking monthly gross sales turnover vs. verified direct payouts transferred to artisan cooperative bank accounts.
           </p>
         </div>
 
         {/* View Switcher */}
-        <div className="flex items-center p-1 rounded-lg bg-obsidian-950 border border-white/[0.08] self-start sm:self-center">
+        <div className="flex items-center p-1 rounded-xl bg-[#EFE6D7]/70 border border-[#B96D43]/15 self-start sm:self-center">
           <button
             onClick={() => setActiveTab("revenue")}
-            className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === "revenue"
-                ? "bg-heritage-terracotta text-white shadow-sm"
-                : "text-stone-400 hover:text-stone-200"
+                ? "bg-[#B96D43] text-white shadow-sm"
+                : "text-[#6E5D53] hover:text-[#49372A]"
             }`}
           >
             Turnover vs Payout
           </button>
           <button
             onClick={() => setActiveTab("orders")}
-            className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === "orders"
-                ? "bg-heritage-terracotta text-white shadow-sm"
-                : "text-stone-400 hover:text-stone-200"
+                ? "bg-[#B96D43] text-white shadow-sm"
+                : "text-[#6E5D53] hover:text-[#49372A]"
             }`}
           >
             Order Volume
@@ -114,34 +113,34 @@ export const SalesRevenueChart: React.FC = () => {
       </div>
 
       {/* KPI Inspection Summary Ribbon */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 my-5 p-3.5 rounded-xl bg-obsidian-900/70 border border-white/[0.05]">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 my-5 p-3.5 rounded-xl bg-[#FFFDF8] border border-[#B96D43]/15 shadow-sm">
         <div>
-          <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 block">
+          <span className="text-[10px] uppercase font-mono tracking-wider text-[#9A887C] font-bold block">
             Cohort Month
           </span>
-          <span className="text-sm font-bold text-white font-mono">{hoveredData.month}</span>
+          <span className="text-sm font-black text-[#49372A] font-mono">{hoveredData.month}</span>
         </div>
         <div>
-          <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 block">
+          <span className="text-[10px] uppercase font-mono tracking-wider text-[#9A887C] font-bold block">
             Gross Turnover
           </span>
-          <span className="text-sm font-bold text-white font-mono">
+          <span className="text-sm font-black text-[#49372A] font-mono">
             {formatCurrencyINR(hoveredData.grossRevenue)}
           </span>
         </div>
         <div>
-          <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 block">
+          <span className="text-[10px] uppercase font-mono tracking-wider text-[#9A887C] font-bold block">
             Artisan Direct Payout
           </span>
-          <span className="text-sm font-bold text-emerald-400 font-mono">
+          <span className="text-sm font-black text-[#3F7A61] font-mono">
             {formatCurrencyINR(hoveredData.artisanPayout)}
           </span>
         </div>
         <div>
-          <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 block">
+          <span className="text-[10px] uppercase font-mono tracking-wider text-[#9A887C] font-bold block">
             Total Orders
           </span>
-          <span className="text-sm font-bold text-heritage-gold font-mono">
+          <span className="text-sm font-black text-[#B96D43] font-mono">
             {hoveredData.orders.toLocaleString("en-IN")} units
           </span>
         </div>
@@ -155,12 +154,12 @@ export const SalesRevenueChart: React.FC = () => {
         >
           <defs>
             <linearGradient id="grossGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#d9653b" stopOpacity="0.32" />
-              <stop offset="100%" stopColor="#d9653b" stopOpacity="0.0" />
+              <stop offset="0%" stopColor="#B96D43" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#B96D43" stopOpacity="0.0" />
             </linearGradient>
             <linearGradient id="payoutGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+              <stop offset="0%" stopColor="#3F7A61" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#3F7A61" stopOpacity="0.0" />
             </linearGradient>
           </defs>
 
@@ -174,7 +173,7 @@ export const SalesRevenueChart: React.FC = () => {
                 y1={y}
                 x2={chartWidth - paddingX}
                 y2={y}
-                stroke="rgba(255, 255, 255, 0.05)"
+                stroke="rgba(185, 109, 67, 0.12)"
                 strokeDasharray="3 3"
               />
             );
@@ -188,14 +187,14 @@ export const SalesRevenueChart: React.FC = () => {
           <path
             d={grossPathD}
             fill="none"
-            stroke="#d9653b"
+            stroke="#B96D43"
             strokeWidth="2.5"
             strokeLinecap="round"
           />
           <path
             d={payoutPathD}
             fill="none"
-            stroke="#10b981"
+            stroke="#3F7A61"
             strokeWidth="2"
             strokeDasharray="4 2"
             strokeLinecap="round"
@@ -208,7 +207,7 @@ export const SalesRevenueChart: React.FC = () => {
               y1={paddingY}
               x2={grossPoints[hoveredIndex].x}
               y2={chartHeight - paddingY}
-              stroke="rgba(255, 255, 255, 0.25)"
+              stroke="rgba(185, 109, 67, 0.3)"
               strokeDasharray="2 2"
             />
           )}
@@ -236,8 +235,8 @@ export const SalesRevenueChart: React.FC = () => {
                   cx={pt.x}
                   cy={pt.y}
                   r={isHovered ? 5.5 : 3.5}
-                  fill="#d9653b"
-                  stroke="#090a0f"
+                  fill="#B96D43"
+                  stroke="#FFFDF8"
                   strokeWidth="2"
                   className="transition-all duration-200"
                 />
@@ -247,8 +246,8 @@ export const SalesRevenueChart: React.FC = () => {
                   cx={payoutPoints[idx].x}
                   cy={payoutPoints[idx].y}
                   r={isHovered ? 4.5 : 2.5}
-                  fill="#10b981"
-                  stroke="#090a0f"
+                  fill="#3F7A61"
+                  stroke="#FFFDF8"
                   strokeWidth="1.5"
                   className="transition-all duration-200"
                 />
@@ -262,16 +261,16 @@ export const SalesRevenueChart: React.FC = () => {
                       width={96}
                       height={18}
                       rx={4}
-                      fill="rgba(18, 21, 32, 0.9)"
-                      stroke="rgba(217, 101, 59, 0.4)"
+                      fill="rgba(255, 253, 248, 0.95)"
+                      stroke="rgba(185, 109, 67, 0.35)"
                     />
                     <text
                       x={pt.x}
                       y={pt.y - 18}
                       textAnchor="middle"
-                      fill="#ea7d54"
+                      fill="#B96D43"
                       fontSize="9"
-                      fontWeight="600"
+                      fontWeight="700"
                       fontFamily="sans-serif"
                     >
                       {pt.data.annotation}
@@ -284,7 +283,7 @@ export const SalesRevenueChart: React.FC = () => {
                   x={pt.x}
                   y={chartHeight - 4}
                   textAnchor="middle"
-                  fill={isHovered ? "#ffffff" : "#a8a29e"}
+                  fill={isHovered ? "#49372A" : "#6E5D53"}
                   fontSize="10"
                   fontFamily="sans-serif"
                   fontWeight={isHovered ? "700" : "500"}
@@ -298,18 +297,18 @@ export const SalesRevenueChart: React.FC = () => {
       </div>
 
       {/* Chart Legend */}
-      <div className="flex items-center justify-between pt-4 mt-2 border-t border-white/[0.06] text-xs text-stone-400">
+      <div className="flex items-center justify-between pt-4 mt-2 border-t border-[#B96D43]/14 text-xs text-[#6E5D53] font-medium">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-0.5 bg-heritage-terracotta inline-block rounded" />
+            <span className="w-3 h-0.5 bg-[#B96D43] inline-block rounded" />
             <span>Gross Platform Revenue</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-0.5 bg-emerald-400 border-dashed inline-block rounded" />
+            <span className="w-3 h-0.5 bg-[#3F7A61] border-dashed inline-block rounded" />
             <span>Direct Artisan Payout (Fair-Trade Escrow)</span>
           </div>
         </div>
-        <span className="font-mono text-[11px] text-stone-400 hidden sm:inline">
+        <span className="font-mono text-[11px] text-[#9A887C] font-semibold hidden sm:inline">
           Audit Verified • Automated Settlement
         </span>
       </div>
