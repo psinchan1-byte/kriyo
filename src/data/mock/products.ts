@@ -1,0 +1,73 @@
+import { Product } from "@/types/product";
+
+export const mockProducts: Product[] = [
+  {
+    id: "prod-1",
+    title: "Tree of Life Mithila Folk Canvas",
+    artisanId: "art-1",
+    artisanName: "Shanti Devi Jha",
+    craftId: "cr-1",
+    craftName: "Madhubani Folk Painting",
+    category: "Painting",
+    price: 8500,
+    currency: "INR",
+    stock: 8,
+    provenance: {
+      originState: "Bihar",
+      handcraftingDurationDays: 14,
+      rawMaterials: ["Handmade Lokta Paper", "Natural Pigment Dyes"],
+    },
+    engagement: {
+      views: 4200,
+      likes: 1250,
+      saves: 680,
+    },
+    createdAt: "2026-08-01T10:00:00Z",
+  },
+  {
+    id: "prod-2",
+    title: "Dokra Lost-Wax Tribal Dancing Figurine",
+    artisanId: "art-2",
+    artisanName: "Laxman Baghel",
+    craftId: "cr-2",
+    craftName: "Dokra Lost-Wax Metal Casting",
+    category: "Metalwork",
+    price: 4200,
+    currency: "INR",
+    stock: 15,
+    provenance: {
+      originState: "Chhattisgarh",
+      handcraftingDurationDays: 8,
+      rawMaterials: ["Scrap Brass", "Natural Beeswax", "River Silt"],
+    },
+    engagement: {
+      views: 3100,
+      likes: 890,
+      saves: 420,
+    },
+    createdAt: "2026-08-12T10:00:00Z",
+  },
+  {
+    id: "prod-3",
+    title: "Hand-Spun Pure Pashmina Shawl (Sozni Needlework)",
+    artisanId: "art-3",
+    artisanName: "Syed Ghulam Rasool",
+    craftId: "cr-3",
+    craftName: "Kashmir Pashmina Handloom Weaving",
+    category: "Textiles",
+    price: 34000,
+    currency: "INR",
+    stock: 3,
+    provenance: {
+      originState: "Jammu & Kashmir",
+      handcraftingDurationDays: 60,
+      rawMaterials: ["Changthangi Cashmere Wool", "Silk Embroidery Thread"],
+    },
+    engagement: {
+      views: 8900,
+      likes: 2400,
+      saves: 1850,
+    },
+    createdAt: "2026-07-20T10:00:00Z",
+  },
+];
