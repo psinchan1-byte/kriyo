@@ -86,7 +86,7 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className="h-16 liquid-control-bar border-b border-[#B96D43]/14 px-5 sm:px-8 flex items-center justify-between sticky top-0 z-30 select-none">
+      <header className="h-16 liquid-control-bar mx-4 mt-4 rounded-2xl px-5 sm:px-8 flex items-center justify-between sticky top-4 z-30 select-none">
         {/* Left: Page Title & Contextual Subtitle */}
         <div className="min-w-0 pr-4">
           <h1 className="text-sm font-bold text-[#49372A] tracking-tight flex items-center gap-2 truncate">

@@ -17,18 +17,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="light">
-      <body
-        suppressHydrationWarning
-        className="antialiased min-h-screen bg-[#F6F1E8] text-[#49372A] flex selection:bg-[#B96D43]/20 selection:text-[#49372A] relative font-sans overflow-hidden"
-      >
+      <body className="antialiased h-screen overflow-hidden bg-heritage-bg text-earth-dark relative font-sans">
         {/* Heritage Artwork & Ambient Liquid Glass Background */}
         <HeritageArtworkBackground />
 
         {/* Spatial Application Shell */}
-        <Sidebar />
-        <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative z-10">
-          <Header />
-          <main className="flex-1 overflow-y-auto flex flex-col relative">{children}</main>
+        <div className="flex w-full h-screen overflow-hidden relative z-10">
+          
+          {/* LAYER 1: FIXED SIDEBAR (handled via Flex layout taking full static height) */}
+          <div className="shrink-0 h-full z-40">
+            <Sidebar />
+          </div>
+          
+          {/* LAYER 2: SCROLLABLE MAIN WORKSPACE */}
+          <div className="flex-1 flex flex-col min-w-0 h-full relative z-10 w-full overflow-hidden bg-transparent">
+            
+            <Header />
+            
+            {/* Dedicated Main Scroll Area */}
+            <main className="flex-1 h-full overflow-y-auto overflow-x-hidden relative w-full p-6 md:p-8">
+              {children}
+            </main>
+
+          </div>
         </div>
       </body>
     </html>

@@ -3,23 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --background: #F6F1E8;
-  --foreground: #49372A;
-  --surface-base: #F6F1E8;
-  --surface-panel: #EFE6D7;
-  --surface-card: #FFFDF8;
+  --background: #E8D7C0;
+  --foreground: #33251D;
+  --surface-base: #E8D7C0;
+  --surface-panel: #E1CDB2;
+  --surface-card: rgba(255, 250, 241, 0.72);
   --border-glass: rgba(255, 255, 255, 0.72);
-  --border-subtle: rgba(185, 109, 67, 0.14);
-  --accent-terracotta: #B96D43;
+  --border-subtle: rgba(121, 88, 60, 0.16);
+  --accent-terracotta: #B96A3D;
+  --accent-terracotta-light: #D69A70;
   --accent-gold: #B58A50;
-  --accent-pale: #C7A27C;
-  --accent-brown: #49372A;
-  --accent-success: #3F7A61;
-  --accent-warning: #B47C35;
-  --accent-danger: #A95050;
-  --text-primary: #49372A;
-  --text-secondary: #6E5D53;
-  --text-muted: #9A887C;
+  --accent-pale: #C7A17A;
+  --accent-brown: #33251D;
+  --accent-success: #28765D;
+  --accent-warning: #B77932;
+  --accent-danger: #B34F4F;
+  --text-primary: #33251D;
+  --text-secondary: #705D4E;
+  --text-muted: #9A8877;
 }
 
 * {
@@ -46,53 +47,52 @@ body {
 
 /* iOS 27 Liquid Glass Panels & Cards */
 .glass-panel {
-  background: rgba(255, 252, 245, 0.68);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(255, 250, 241, 0.70);
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
   border: 1px solid rgba(255, 255, 255, 0.72);
-  border-bottom-color: rgba(185, 109, 67, 0.14);
-  box-shadow: 0 10px 32px -6px rgba(73, 55, 42, 0.07), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px rgba(87, 60, 38, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 .glass-panel-elevated {
-  background: rgba(255, 253, 248, 0.82);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  background: rgba(255, 250, 241, 0.85);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
   border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 16px 48px -8px rgba(73, 55, 42, 0.10), inset 0 2px 1px 0 rgba(255, 255, 255, 1);
+  box-shadow: 0 16px 42px rgba(87, 60, 38, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
 }
 
 .glass-card-interactive {
-  background: rgba(255, 253, 248, 0.78);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-bottom-color: rgba(185, 109, 67, 0.14);
-  box-shadow: 0 8px 24px -4px rgba(73, 55, 42, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.85);
+  background: rgba(255, 250, 241, 0.70);
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8px 32px rgba(87, 60, 38, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.75);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card-interactive:hover {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(185, 109, 67, 0.25);
-  box-shadow: 0 14px 36px -6px rgba(185, 109, 67, 0.12), inset 0 1.5px 1px 0 rgba(255, 255, 255, 1);
+  background: rgba(255, 250, 241, 0.85);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 12px 36px rgba(87, 60, 38, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
 }
 
 /* Specialty Liquid Glass Bar Classes */
 .liquid-glass-nav {
-  background: rgba(246, 241, 232, 0.78);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border-right: 1px solid rgba(185, 109, 67, 0.14);
-  box-shadow: 4px 0 24px -4px rgba(73, 55, 42, 0.04), inset -1px 0 0 0 rgba(255, 255, 255, 0.6);
+  background: rgba(255, 250, 241, 0.70);
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8px 32px rgba(87, 60, 38, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 .liquid-control-bar {
-  background: rgba(246, 241, 232, 0.75);
-  backdrop-filter: blur(26px) saturate(190%);
-  -webkit-backdrop-filter: blur(26px) saturate(190%);
-  border-bottom: 1px solid rgba(185, 109, 67, 0.14);
-  box-shadow: 0 4px 20px -4px rgba(73, 55, 42, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+  background: rgba(255, 250, 241, 0.75);
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8px 32px rgba(87, 60, 38, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 /* Numerical typography */
@@ -112,12 +112,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(185, 109, 67, 0.25);
+  background: rgba(185, 105, 61, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(185, 109, 67, 0.45);
+  background: rgba(185, 105, 61, 0.45);
 }
 
 /* Ambient Slow Background Movement Keyframes (20-30s) */

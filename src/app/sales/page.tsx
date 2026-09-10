@@ -75,8 +75,79 @@ export default function SalesPage() {
         </GlassCard>
       </div>
 
-      {/* Main Revenue & Payout Chart */}
-      <SalesRevenueChart />
+      {/* Main Layout: Chart (Left) + Insights & Categories (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+        <div className="lg:col-span-2 h-full">
+          <SalesRevenueChart />
+        </div>
+
+        <div className="space-y-6">
+          {/* Key Insights Panel */}
+          <GlassCard variant="default" className="p-6">
+            <h3 className="text-base font-semibold text-earth-dark tracking-tight mb-4">
+              Key Insights
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-heritage-green-light flex items-center justify-center shrink-0">
+                  <TrendingUp className="w-4 h-4 text-heritage-green" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-earth-dark">Festival season demand ↑ 34%</div>
+                  <div className="text-xs text-earth-muted mt-0.5">Driven by Madhubani & Pattachitra crafts</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-heritage-terracotta/10 flex items-center justify-center shrink-0">
+                  <ShoppingBag className="w-4 h-4 text-heritage-terracotta" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-earth-dark">B2B institutional orders ↑ 28%</div>
+                  <div className="text-xs text-earth-muted mt-0.5">New government procurement contracts</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-heritage-gold/10 flex items-center justify-center shrink-0">
+                  <IndianRupee className="w-4 h-4 text-heritage-gold" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-earth-dark">Direct artisan payouts ↑ 24.6%</div>
+                  <div className="text-xs text-earth-muted mt-0.5">Higher financial inclusion this quarter</div>
+                </div>
+              </div>
+            </div>
+          </GlassCard>
+
+          {/* Top Performing Categories */}
+          <GlassCard variant="default" className="p-6">
+            <h3 className="text-base font-semibold text-earth-dark tracking-tight mb-4">
+              Top Performing Categories
+            </h3>
+            <div className="space-y-4">
+              {[
+                { name: "Textiles", val: 32 },
+                { name: "Paintings", val: 24 },
+                { name: "Metalwork", val: 18 },
+                { name: "Woodcraft", val: 14 },
+                { name: "Pottery & Ceramics", val: 12 },
+              ].map((cat, i) => (
+                <div key={i}>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="font-semibold text-earth-dark">{cat.name}</span>
+                    <span className="font-mono text-earth-slate">{cat.val}%</span>
+                  </div>
+                  <div className="w-full bg-heritage-secondary rounded-full h-1.5">
+                    <div
+                      className="bg-heritage-terracotta h-1.5 rounded-full"
+                      style={{ width: `${cat.val}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </GlassCard>
+        </div>
+      </div>
 
       {/* Recent Orders Ledger Table */}
       <GlassCard variant="default" className="p-6">
@@ -89,7 +160,7 @@ export default function SalesPage() {
               Live settlement verification with automated artisan cooperative split.
             </p>
           </div>
-          <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-heritage-sand text-earth-slate border border-[#B8794A]/14">
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-heritage-secondary text-earth-slate border border-[#B8794A]/14">
             ONDC NETWORK ORDERS
           </span>
         </div>
@@ -108,7 +179,7 @@ export default function SalesPage() {
             </thead>
             <tbody className="divide-y divide-[#B8794A]/10">
               {recentOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-[#B8794A]/5 transition-colors">
+                <tr key={order.id} className="hover:bg-heritage-terracotta/5 transition-colors">
                   <td className="py-3 px-3 font-mono text-heritage-terracotta font-semibold">
                     {order.orderNumber}
                   </td>
@@ -137,6 +208,42 @@ export default function SalesPage() {
           </table>
         </div>
       </GlassCard>
+
+      {/* Bottom Impact Strip */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+        {[
+          {
+            title: "Verified Transactions",
+            desc: "100% block-verified",
+            icon: <ShieldCheck className="w-5 h-5 text-heritage-green" />,
+          },
+          {
+            title: "Fair-Trade Certified",
+            desc: "Guaranteed margins",
+            icon: <IndianRupee className="w-5 h-5 text-heritage-gold" />,
+          },
+          {
+            title: "Government Integration",
+            desc: "ONDC connected",
+            icon: <Calendar className="w-5 h-5 text-heritage-terracotta" />,
+          },
+          {
+            title: "Impact Metrics",
+            desc: "High rural uplift",
+            icon: <TrendingUp className="w-5 h-5 text-earth-slate" />,
+          },
+        ].map((item, i) => (
+          <GlassCard key={i} variant="interactive" className="p-4 flex items-center gap-4">
+            <div className="p-2 rounded-full bg-heritage-secondary shrink-0">
+              {item.icon}
+            </div>
+            <div>
+              <div className="text-sm font-bold text-earth-dark">{item.title}</div>
+              <div className="text-xs text-earth-muted">{item.desc}</div>
+            </div>
+          </GlassCard>
+        ))}
+      </div>
     </PageContainer>
   );
 }

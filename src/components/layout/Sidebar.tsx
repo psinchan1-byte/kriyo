@@ -42,8 +42,8 @@ export const Sidebar: React.FC = () => {
   return (
     <aside
       className={cn(
-        "liquid-glass-nav text-[#49372A] min-h-screen flex flex-col shrink-0 select-none z-40 transition-all duration-300 ease-in-out relative",
-        isCollapsed ? "w-[74px]" : "w-64"
+        "glass-panel m-4 rounded-2xl h-[calc(100vh-2rem)] flex flex-col transition-all duration-300 z-40",
+        isCollapsed ? "w-20" : "w-[260px]"
       )}
     >
       {/* Collapse / Expand Toggle Button */}
@@ -81,7 +81,7 @@ export const Sidebar: React.FC = () => {
         {NAVIGATION_GROUPS.map((group) => (
           <div key={group.title} className="space-y-1">
             {!isCollapsed && (
-              <div className="px-3 pb-1 text-[9.5px] font-bold text-[#9A887C] uppercase tracking-widest font-mono">
+              <div className="px-3 pb-1 text-[9.5px] font-bold text-earth-muted uppercase tracking-widest font-mono">
                 {group.title}
               </div>
             )}
@@ -100,13 +100,13 @@ export const Sidebar: React.FC = () => {
                   className={cn(
                     "flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-all relative group cursor-pointer",
                     isActive
-                      ? "bg-gradient-to-r from-[#B96D43]/16 to-[#B58A50]/10 text-[#B96D43] font-bold border border-[#B96D43]/30 shadow-sm"
-                      : "text-[#6E5D53] hover:text-[#49372A] hover:bg-[#B96D43]/08 border border-transparent"
+                      ? "bg-heritage-terracotta/10 text-heritage-terracotta font-bold border border-heritage-terracotta/20 shadow-sm backdrop-blur-md"
+                      : "text-earth-slate hover:text-earth-dark hover:bg-heritage-terracotta/5 border border-transparent"
                   )}
                 >
                   {/* Active Indicator Bar */}
                   {isActive && (
-                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r bg-[#B96D43] shadow-sm" />
+                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r bg-heritage-terracotta shadow-sm" />
                   )}
 
                   {/* Icon */}
@@ -114,8 +114,8 @@ export const Sidebar: React.FC = () => {
                     className={cn(
                       "transition-colors",
                       isActive
-                        ? "text-[#B96D43]"
-                        : "text-[#6E5D53] group-hover:text-[#49372A]"
+                        ? "text-heritage-terracotta"
+                        : "text-earth-slate group-hover:text-earth-dark"
                     )}
                   >
                     {icon}
@@ -123,15 +123,15 @@ export const Sidebar: React.FC = () => {
 
                   {/* Text & Badge */}
                   {!isCollapsed && (
-                    <div className="min-w-0 flex-1 flex items-center justify-between">
+                     <div className="min-w-0 flex-1 flex items-center justify-between">
                       <span className="truncate">{item.name}</span>
                       {item.badge && (
                         <span
                           className={cn(
-                            "text-[9px] font-mono px-1.5 py-0.5 rounded uppercase tracking-wider font-bold",
+                            "text-[9px] font-mono px-1.5 py-0.5 rounded uppercase tracking-wider font-bold shadow-sm",
                             item.badge === "Copilot"
-                              ? "bg-[#B58A50]/18 text-[#7E5723] border border-[#B58A50]/35"
-                              : "bg-[#A95050]/15 text-[#A95050] border border-[#A95050]/30"
+                              ? "bg-heritage-gold/20 text-heritage-gold border border-heritage-gold/30"
+                              : "bg-heritage-red/15 text-heritage-red border border-heritage-red/30"
                           )}
                         >
                           {item.badge}

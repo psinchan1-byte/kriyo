@@ -61,85 +61,108 @@ export default function ProductsPage() {
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filtered.map((product) => (
+        {filtered.map((product, idx) => (
           <GlassCard
             key={product.id}
             variant="interactive"
-            className="p-6 relative group"
+            className="relative group overflow-hidden flex flex-col h-full"
           >
-            <div className="flex items-start justify-between gap-2 pb-3 border-b border-[#B8794A]/12">
-              <div>
-                <span className="text-[10px] font-mono uppercase text-heritage-terracotta font-semibold">
+            {/* Image Header */}
+            <div className="h-40 w-full relative shrink-0">
+              <img
+                src={
+                  product.category === "PAINTING"
+                    ? "https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?q=80&w=800&auto=format&fit=crop"
+                    : product.category === "METALWORK"
+                    ? "https://images.unsplash.com/photo-1533558701576-23c65e0272fb?q=80&w=800&auto=format&fit=crop"
+                    : product.category === "TEXTILES"
+                    ? "https://images.unsplash.com/photo-1528318269466-69d9205561a7?q=80&w=800&auto=format&fit=crop"
+                    : "https://images.unsplash.com/photo-1528318269466-69d9205561a7?q=80&w=800&auto=format&fit=crop" // fallback
+                }
+                alt={product.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              
+              <div className="absolute top-4 left-4 right-4 flex items-start justify-between z-10">
+                <span className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-heritage-terracotta font-bold bg-[#FFFDF8]/90 px-2.5 py-1 rounded-md border border-heritage-terracotta/20 shadow-sm backdrop-blur-md">
+                  <div className="w-1.5 h-1.5 rounded-full bg-heritage-terracotta" />
                   {product.category}
                 </span>
-                <h3 className="text-sm font-bold text-earth-dark group-hover:text-heritage-terracotta transition-colors mt-0.5">
-                  {product.title}
-                </h3>
-              </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 shrink-0">
-                In Stock ({product.stock})
-              </span>
-            </div>
-
-            <div className="my-3 space-y-1.5 text-xs">
-              <div className="text-earth-slate">
-                Craft: <strong className="text-earth-dark">{product.craftName}</strong>
-              </div>
-              <div className="text-earth-muted">
-                Master Artisan: <strong className="text-earth-dark">{product.artisanName}</strong>
+                <span className="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold bg-[#DCEDE3]/90 text-heritage-green border border-heritage-green/30 backdrop-blur-md shadow-sm">
+                  In Stock ({product.stock})
+                </span>
               </div>
             </div>
 
-            {/* Provenance Box */}
-            <div className="p-3 rounded-xl bg-heritage-sand/50 border border-[#B8794A]/14 text-xs space-y-2">
-              <div className="flex items-center justify-between text-[11px] text-earth-slate font-mono">
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3 h-3 text-heritage-gold" />
-                  Crafting: {product.provenance.handcraftingDurationDays} Days
-                </span>
-                <span className="flex items-center gap-1 text-emerald-800 font-semibold">
-                  <ShieldCheck className="w-3 h-3 text-emerald-700" />
-                  GI Authenticated
-                </span>
+            <div className="p-5 flex-1 flex flex-col relative z-10 bg-gradient-to-b from-transparent to-white/30">
+              <h3 className="text-sm font-bold text-earth-dark group-hover:text-heritage-terracotta transition-colors line-clamp-1">
+                {product.title}
+              </h3>
+              
+              <div className="mt-2 space-y-1 text-xs">
+                <div className="text-earth-slate">
+                  Craft: <strong className="text-earth-dark">{product.craftName}</strong>
+                </div>
+                <div className="text-earth-muted">
+                  Master Artisan: <strong className="text-earth-dark">{product.artisanName}</strong>
+                </div>
               </div>
 
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <Layers className="w-3 h-3 text-earth-muted shrink-0" />
-                {product.provenance.rawMaterials.map((mat, i) => (
-                  <span
-                    key={i}
-                    className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FFFDF8] text-earth-slate border border-[#B8794A]/14"
-                  >
-                    {mat}
+              {/* Provenance Box */}
+              <div className="mt-4 p-3 rounded-xl bg-heritage-bg/60 border border-heritage-border text-xs space-y-2.5">
+                <div className="flex items-center justify-between text-[11px] text-earth-slate font-mono">
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-heritage-gold" />
+                    {product.provenance.handcraftingDurationDays} Days
                   </span>
-                ))}
-              </div>
-            </div>
+                  <span className="flex items-center gap-1 text-heritage-green font-bold">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    GI Authenticated
+                  </span>
+                </div>
 
-            {/* Price & Engagement Footer */}
-            <div className="mt-4 pt-3 border-t border-[#B8794A]/12 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] text-earth-muted font-mono uppercase block">
-                  Fair-Trade Price
-                </span>
-                <span className="text-lg font-bold text-earth-dark num-display">
-                  {formatCurrencyINR(product.price)}
-                </span>
+                <div className="flex items-center gap-1.5 flex-wrap pt-1">
+                  <Layers className="w-3.5 h-3.5 text-earth-muted shrink-0" />
+                  {product.provenance.rawMaterials.map((mat, i) => (
+                    <span
+                      key={i}
+                      className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-white/70 text-earth-slate border border-heritage-border/50 shadow-sm"
+                    >
+                      {mat}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex items-center gap-3 text-xs text-earth-slate font-mono">
-                <span className="flex items-center gap-1" title="Views">
-                  <Eye className="w-3.5 h-3.5 text-earth-muted" />
-                  {product.engagement.views}
-                </span>
-                <span className="flex items-center gap-1" title="Likes">
-                  <Heart className="w-3.5 h-3.5 text-rose-500" />
-                  {product.engagement.likes}
-                </span>
-                <span className="flex items-center gap-1" title="Saves">
-                  <Bookmark className="w-3.5 h-3.5 text-heritage-gold" />
-                  {product.engagement.saves}
-                </span>
+              {/* Spacer to push footer to bottom if cards stretch */}
+              <div className="flex-1"></div>
+
+              {/* Price & Engagement Footer */}
+              <div className="mt-5 pt-4 border-t border-heritage-border/60 flex items-end justify-between">
+                <div>
+                  <span className="text-[9px] text-earth-muted font-mono uppercase font-bold block mb-0.5">
+                    Fair-Trade Price
+                  </span>
+                  <span className="text-lg font-black text-earth-dark num-display">
+                    {formatCurrencyINR(product.price)}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2.5 text-xs text-earth-slate font-mono">
+                  <span className="flex items-center gap-1" title="Views">
+                    <Eye className="w-3.5 h-3.5 text-earth-muted" />
+                    {product.engagement.views}
+                  </span>
+                  <span className="flex items-center gap-1" title="Likes">
+                    <Heart className="w-3.5 h-3.5 text-heritage-red" />
+                    {product.engagement.likes}
+                  </span>
+                  <span className="flex items-center gap-1" title="Saves">
+                    <Bookmark className="w-3.5 h-3.5 text-heritage-gold" />
+                    {product.engagement.saves}
+                  </span>
+                </div>
               </div>
             </div>
           </GlassCard>

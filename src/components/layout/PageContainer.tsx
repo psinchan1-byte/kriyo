@@ -19,7 +19,7 @@ export const PageContainer: React.FC<PageContainerProps> = ({
   className = "",
 }) => {
   return (
-    <div className={cn("flex-1 p-5 sm:p-8 overflow-y-auto max-w-7xl mx-auto w-full", className)}>
+    <div className={cn("flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full", className)}>
       <div className="pb-6 mb-6 border-b border-[#B8794A]/12 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">

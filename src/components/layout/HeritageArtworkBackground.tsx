@@ -37,7 +37,7 @@ export const HeritageArtworkBackground: React.FC = () => {
 
       {/* Traditional Indian Folk Art (Madhubani & Mandala Motif Watermark - Top Right) */}
       <svg
-        className="absolute top-10 right-10 w-96 h-96 text-[#B96D43] opacity-[0.045] transform rotate-12 animate-ambient-mandala"
+        className="absolute top-10 right-10 w-[42rem] h-[42rem] text-[#B96A3D] opacity-15 transform rotate-12 animate-ambient-mandala"
         viewBox="0 0 200 200"
         fill="none"
         stroke="currentColor"
@@ -61,7 +61,7 @@ export const HeritageArtworkBackground: React.FC = () => {
 
       {/* Second Kalamkari/Warli Motif (Bottom Left) */}
       <svg
-        className="absolute -bottom-28 -left-28 w-[38rem] h-[38rem] text-[#C7A27C] opacity-[0.04]"
+        className="absolute -bottom-10 -left-10 w-[48rem] h-[48rem] text-[#C7A17A] opacity-20"
         viewBox="0 0 300 300"
         fill="none"
         stroke="currentColor"
@@ -73,14 +73,14 @@ export const HeritageArtworkBackground: React.FC = () => {
         <circle cx="150" cy="150" r="50" />
         {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
           <g key={i} transform={`rotate(${angle} 150 150)`}>
-            <polygon points="150,40 162,70 138,70" fill="currentColor" fillOpacity="0.08" />
+            <polygon points="150,40 162,70 138,70" fill="currentColor" fillOpacity="0.1" />
             <line x1="150" y1="10" x2="150" y2="40" />
           </g>
         ))}
       </svg>
 
       {/* Subtle Dot Grid */}
-      <div className="absolute inset-0 bg-heritage-grid opacity-60" />
+      <div className="absolute inset-0 bg-heritage-grid opacity-30" />
     </div>
   );
 };

@@ -1,25 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GlassCard } from "./GlassCard";
 import { StatusBadge } from "./StatusBadge";
 import { MapPin, Users, TrendingUp, Compass, ShieldCheck } from "lucide-react";
+import { geoMercator, geoPath } from "d3-geo";
 import {
   REGION_CLUSTERS_DATA,
   RegionClusterData,
-  INDIA_MAINLAND_OUTLINE,
-  INDIA_STATE_BOUNDARIES,
   ANDAMAN_NICOBAR_ISLANDS,
   LAKSHADWEEP_ISLANDS,
 } from "@/data/indiaGeoJson";
 
 export const IndiaMap: React.FC = () => {
+  const [geoData, setGeoData] = useState<any>(null);
   const [selectedCluster, setSelectedCluster] = useState<RegionClusterData>(
     REGION_CLUSTERS_DATA[3] // Default to Eastern Corridor (Madhubani)
   );
   const [hoveredCluster, setHoveredCluster] = useState<RegionClusterData | null>(null);
 
+  useEffect(() => {
+    fetch("/india-states.json")
+      .then((res) => res.json())
+      .then((data) => setGeoData(data))
+      .catch((err) => console.error("Error loading GeoJSON", err));
+  }, []);
+
   const active = hoveredCluster || selectedCluster;
+
+  // D3 Projection Setup
+  // We use fitExtent to perfectly center and scale India within a padded bounding box of our 600x650 SVG
+  const projection = geoMercator();
+  const pathGenerator = geoPath().projection(projection);
+
+  if (geoData) {
+    projection.fitExtent(
+      [
+        [50, 50],
+        [500, 600],
+      ],
+      geoData
+    );
+  }
 
   return (
     <GlassCard variant="default" className="p-6 relative overflow-hidden">
@@ -47,7 +69,7 @@ export const IndiaMap: React.FC = () => {
             <span className="w-2.5 h-2.5 rounded-full bg-[#3F7A61]" /> Thriving
           </div>
           <div className="flex items-center gap-1.5 text-xs text-[#6E5D53] font-medium">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#0284C7]" /> Stable
+            <span className="w-2.5 h-2.5 rounded-full bg-[#1686C9]" /> Stable
           </div>
           <div className="flex items-center gap-1.5 text-xs text-[#6E5D53] font-medium">
             <span className="w-2.5 h-2.5 rounded-full bg-[#B47C35]" /> Vulnerable
@@ -57,166 +79,262 @@ export const IndiaMap: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6 items-center">
         {/* Precise Fixed India Map Canvas */}
-        <div className="lg:col-span-7 relative flex items-center justify-center p-4 min-h-[420px] bg-gradient-to-b from-[#FFFDF8]/90 to-[#EFE6D7]/40 rounded-2xl border border-[#B96D43]/16 shadow-inner-light select-none">
-          {/* SVG Precise Geographic India Map - Fixed Position */}
-          <svg
-            viewBox="0 0 600 650"
-            className="w-full max-w-[480px] h-auto pointer-events-none filter drop-shadow-[0_8px_20px_rgba(73,55,42,0.08)]"
-          >
-            <defs>
-              <linearGradient id="indiaMapFill" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FFFDF8" stopOpacity="0.92" />
-                <stop offset="50%" stopColor="#EFE6D7" stopOpacity="0.80" />
-                <stop offset="100%" stopColor="#F6F1E8" stopOpacity="0.95" />
-              </linearGradient>
+        <div className="lg:col-span-7 relative flex items-center justify-center p-4 min-h-[500px] bg-[#E8D7C0] rounded-2xl border border-[#B96D43]/16 shadow-inner-light select-none overflow-hidden">
+          
+          {!geoData ? (
+            <div className="text-[#806C5B] font-mono text-sm font-bold tracking-widest animate-pulse">
+              LOADING GEOGRAPHIC DATA...
+            </div>
+          ) : (
+            <svg
+              viewBox="0 0 600 650"
+              className="w-full h-full max-w-[550px] pointer-events-none drop-shadow-[0_10px_25px_rgba(58,42,32,0.15)]"
+            >
+              <defs>
+                <linearGradient id="indiaMapFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F8EEDF" />
+                  <stop offset="100%" stopColor="#E8D7C0" />
+                </linearGradient>
 
-              <linearGradient id="corridorVector" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#B96D43" stopOpacity="0.5" />
-                <stop offset="50%" stopColor="#B58A50" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#3F7A61" stopOpacity="0.4" />
-              </linearGradient>
-            </defs>
+                {/* Node colors based on the reference image */}
+                <radialGradient id="haloBlue">
+                  <stop offset="60%" stopColor="#1686C9" stopOpacity="0.15" />
+                  <stop offset="100%" stopColor="#1686C9" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="haloGreen">
+                  <stop offset="60%" stopColor="#2D8A62" stopOpacity="0.15" />
+                  <stop offset="100%" stopColor="#2D8A62" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="haloOrange">
+                  <stop offset="60%" stopColor="#D47A19" stopOpacity="0.15" />
+                  <stop offset="100%" stopColor="#D47A19" stopOpacity="0" />
+                </radialGradient>
+              </defs>
 
-            {/* 1. Precise India Mainland Boundary Polygon */}
-            <path
-              d={INDIA_MAINLAND_OUTLINE}
-              fill="url(#indiaMapFill)"
-              stroke="#B96D43"
-              strokeWidth="1.75"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-            />
+              {/* BACKGROUND ORBITAL RINGS */}
+              <g stroke="#806C5B" strokeOpacity="0.1" strokeWidth="1" fill="none">
+                <circle cx="300" cy="325" r="450" />
+                <circle cx="300" cy="325" r="350" strokeDasharray="4 8" />
+                <circle cx="300" cy="325" r="250" />
+                
+                {/* Orbital dots */}
+                <circle cx="100" cy="100" r="4" fill="#806C5B" fillOpacity="0.1" />
+                <circle cx="500" cy="450" r="6" fill="#806C5B" fillOpacity="0.08" />
+                <circle cx="150" cy="400" r="3" fill="#806C5B" fillOpacity="0.1" />
+              </g>
 
-            {/* 2. Detailed Internal State Corridors */}
-            {INDIA_STATE_BOUNDARIES.map((boundaryD, i) => (
-              <path
-                key={i}
-                d={boundaryD}
-                fill="none"
-                stroke="#B96D43"
-                strokeWidth="0.75"
-                strokeOpacity="0.25"
-                strokeDasharray="3 3"
-              />
-            ))}
+              {/* COMPASS ROSE (Top Right) */}
+              <g transform="translate(480, 70)" stroke="#806C5B" strokeOpacity="0.2" fill="none">
+                <circle cx="0" cy="0" r="60" strokeWidth="1" />
+                <circle cx="0" cy="0" r="50" strokeDasharray="2 4" />
+                <circle cx="0" cy="0" r="40" strokeWidth="0.5" />
+                
+                {/* Star / Pointer */}
+                <path d="M 0 -25 L 5 -5 L 25 0 L 5 5 L 0 25 L -5 5 L -25 0 L -5 -5 Z" fill="#806C5B" fillOpacity="0.2" stroke="none" />
+                <path d="M 0 -25 L 5 -5 L 0 0 Z" fill="#806C5B" fillOpacity="0.4" stroke="none" />
+                <path d="M 0 0 L 5 5 L 25 0 Z" fill="#806C5B" fillOpacity="0.2" stroke="none" />
+                <path d="M 0 25 L -5 5 L 0 0 Z" fill="#806C5B" fillOpacity="0.4" stroke="none" />
+                <path d="M 0 0 L -5 -5 L -25 0 Z" fill="#806C5B" fillOpacity="0.2" stroke="none" />
+                
+                <text x="0" y="-35" fill="#806C5B" fillOpacity="0.5" fontSize="10" fontWeight="bold" textAnchor="middle" letterSpacing="1">N</text>
+              </g>
 
-            {/* 3. Andaman & Nicobar Island Territories */}
-            {ANDAMAN_NICOBAR_ISLANDS.map((island, idx) => (
-              <ellipse
-                key={`an-${idx}`}
-                cx={island.cx}
-                cy={island.cy}
-                rx={island.rx}
-                ry={island.ry}
-                fill="#C7A27C"
-                stroke="#B96D43"
-                strokeWidth="1"
-                opacity="0.85"
-              />
-            ))}
+              {/* GEOGRAPHIC LABELS */}
+              <g fill="#806C5B" fillOpacity="0.65" fontSize="9" fontWeight="700" letterSpacing="3" fontFamily="sans-serif">
+                <text x="80" y="150">PAKISTAN</text>
+                <text x="350" y="100">CHINA</text>
+                <text x="310" y="190">NEPAL</text>
+                <text x="420" y="200">BHUTAN</text>
+                <text x="400" y="280">BANGLADESH</text>
+                <text x="530" y="310">MYANMAR</text>
 
-            {/* 4. Lakshadweep Island Territories */}
-            {LAKSHADWEEP_ISLANDS.map((island, idx) => (
-              <circle
-                key={`ld-${idx}`}
-                cx={island.cx}
-                cy={island.cy}
-                r={island.r}
-                fill="#C7A27C"
-                stroke="#B96D43"
-                strokeWidth="1"
-                opacity="0.85"
-              />
-            ))}
+                {/* Water Bodies */}
+                <text x="50" y="360" letterSpacing="4">ARABIAN</text>
+                <text x="70" y="380" letterSpacing="4">SEA</text>
+                <text x="440" y="400" letterSpacing="4">BAY OF</text>
+                <text x="435" y="420" letterSpacing="4">BENGAL</text>
+                <text x="270" y="600" letterSpacing="4">INDIAN OCEAN</text>
+              </g>
 
-            {/* 5. Inter-Corridor Telemetry Vectors */}
-            <path
-              d="M 235 155 Q 180 215 130 275 T 260 330 T 385 310 T 505 220 T 215 495"
-              fill="none"
-              stroke="url(#corridorVector)"
-              strokeWidth="2"
-              strokeDasharray="5 5"
-              className="animate-pulse"
-            />
-
-            {/* 6. Fixed Interactive Geographic Markers */}
-            {REGION_CLUSTERS_DATA.map((c) => {
-              const isSelected = selectedCluster.id === c.id;
-              const isHovered = hoveredCluster?.id === c.id;
-              const color =
-                c.status === "Thriving"
-                  ? "#3F7A61"
-                  : c.status === "Stable"
-                  ? "#0284C7"
-                  : "#B47C35";
-
-              return (
-                <g
-                  key={c.id}
-                  className="pointer-events-auto cursor-pointer"
-                  onClick={() => setSelectedCluster(c)}
-                  onMouseEnter={() => setHoveredCluster(c)}
-                  onMouseLeave={() => setHoveredCluster(null)}
-                >
-                  {/* Outer pulse wave */}
-                  {(isSelected || isHovered) && (
-                    <circle
-                      cx={c.coordinates.x}
-                      cy={c.coordinates.y}
-                      r="22"
-                      fill={color}
-                      opacity="0.22"
-                      className="animate-ping"
+              {/* 1 & 2. Authentic India Geographic Vectors (States) */}
+              <g strokeLinejoin="round" strokeLinecap="round">
+                {geoData.features.map((feature: any, i: number) => {
+                  const d = pathGenerator(feature);
+                  if (!d) return null;
+                  return (
+                    <path
+                      key={i}
+                      d={d}
+                      fill="url(#indiaMapFill)"
+                      stroke="#D7A984"
+                      strokeWidth="0.8"
+                      strokeOpacity="0.6"
+                      strokeDasharray="2 2"
+                      className="pointer-events-none"
                     />
-                  )}
+                  );
+                })}
+              </g>
+              
+              {/* National Boundary Overlay (Derived from merging states or just using the same paths with a thicker outline stroke) */}
+              {/* We render a thicker outline by cloning the paths but with no fill and a solid stroke */}
+              <g strokeLinejoin="round" strokeLinecap="round">
+                {geoData.features.map((feature: any, i: number) => {
+                  const d = pathGenerator(feature);
+                  if (!d) return null;
+                  return (
+                    <path
+                      key={`outline-${i}`}
+                      d={d}
+                      fill="none"
+                      stroke="#B96635"
+                      strokeWidth="1.5"
+                      className="pointer-events-none"
+                    />
+                  );
+                })}
+              </g>
 
-                  {/* Outer halo */}
-                  <circle
-                    cx={c.coordinates.x}
-                    cy={c.coordinates.y}
-                    r={isSelected || isHovered ? "16" : "12"}
-                    fill={color}
-                    opacity={isSelected ? "0.38" : "0.18"}
-                    stroke={color}
-                    strokeWidth={isSelected ? "2.5" : "1.2"}
-                  />
+              {/* 3. Andaman & Nicobar Island Territories */}
+              <g stroke="#B96635" strokeWidth="1" fill="url(#indiaMapFill)">
+                {ANDAMAN_NICOBAR_ISLANDS.map((island, idx) => {
+                  const p = projection([island.lng, island.lat]);
+                  if (!p) return null;
+                  return (
+                    <circle
+                      key={`an-${idx}`}
+                      cx={p[0]}
+                      cy={p[1]}
+                      r={island.r}
+                    />
+                  );
+                })}
+                {(() => {
+                  const p = projection([92.5, 12]);
+                  return p && (
+                    <text x={p[0] + 15} y={p[1]} fill="#806C5B" fillOpacity="0.65" fontSize="7" fontWeight="bold" letterSpacing="1">
+                      ANDAMAN & NICOBAR
+                    </text>
+                  );
+                })()}
+              </g>
 
-                  {/* Core Node Marker */}
-                  <circle
-                    cx={c.coordinates.x}
-                    cy={c.coordinates.y}
-                    r={isSelected ? "7" : "5"}
-                    fill={color}
-                  />
+              {/* 4. Lakshadweep Island Territories */}
+              <g stroke="#B96635" strokeWidth="1" fill="url(#indiaMapFill)">
+                {LAKSHADWEEP_ISLANDS.map((island, idx) => {
+                  const p = projection([island.lng, island.lat]);
+                  if (!p) return null;
+                  return (
+                    <circle
+                      key={`ld-${idx}`}
+                      cx={p[0]}
+                      cy={p[1]}
+                      r={island.r}
+                    />
+                  );
+                })}
+                {(() => {
+                  const p = projection([72.5, 11]);
+                  return p && (
+                    <text x={p[0] - 25} y={p[1] - 10} fill="#806C5B" fillOpacity="0.65" fontSize="7" fontWeight="bold" letterSpacing="1" textAnchor="end">
+                      LAKSHADWEEP
+                    </text>
+                  );
+                })()}
+              </g>
 
-                  {/* Label Pill */}
-                  <text
-                    x={c.coordinates.x + 14}
-                    y={c.coordinates.y + 4}
-                    fill={isSelected || isHovered ? "#49372A" : "#6E5D53"}
-                    fontSize="11"
-                    fontWeight={isSelected ? "700" : "600"}
-                    fontFamily="sans-serif"
-                    className="select-none filter drop-shadow-sm"
+              {/* 6. Fixed Interactive Geographic Markers */}
+              {REGION_CLUSTERS_DATA.map((c) => {
+                const isSelected = selectedCluster.id === c.id;
+                const isHovered = hoveredCluster?.id === c.id;
+                
+                // Map regions to the specific colors in the mockup
+                let color = "#D47A19"; // Default Orange
+                let haloUrl = "url(#haloOrange)";
+                if (c.name.includes("Northern") || c.name.includes("North-Eastern")) {
+                  color = "#1686C9"; // Blue
+                  haloUrl = "url(#haloBlue)";
+                } else if (c.name.includes("Western") || c.name.includes("Eastern") && !c.name.includes("North")) {
+                  color = "#2D8A62"; // Green
+                  haloUrl = "url(#haloGreen)";
+                }
+
+                // Project Longitude/Latitude to SVG pixel coordinates
+                const projectedPoint = projection([c.coordinates.lng, c.coordinates.lat]);
+                if (!projectedPoint) return null;
+                const [cx, cy] = projectedPoint;
+
+                return (
+                  <g
+                    key={c.id}
+                    className="pointer-events-auto cursor-pointer"
+                    onClick={() => setSelectedCluster(c)}
+                    onMouseEnter={() => setHoveredCluster(c)}
+                    onMouseLeave={() => setHoveredCluster(null)}
                   >
-                    {c.name.split(" ")[0]} ({c.demandIndex})
-                  </text>
-                </g>
-              );
-            })}
-          </svg>
+                    {/* Outer translucent halo */}
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={isSelected || isHovered ? "28" : "20"}
+                      fill={haloUrl}
+                      className="transition-all duration-300"
+                    />
+                    
+                    {/* Inner ring */}
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={isSelected || isHovered ? "14" : "12"}
+                      fill={color}
+                      opacity="0.15"
+                    />
+
+                    {/* Core Node Marker */}
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r="5"
+                      fill={color}
+                    />
+
+                    {/* Compact Label */}
+                    <g transform={`translate(${cx + 12}, ${cy + 4})`}>
+                      <text
+                        x="0"
+                        y="0"
+                        fill="#3A2A20"
+                        fontSize="10"
+                        fontWeight="700"
+                        fontFamily="sans-serif"
+                        className="select-none"
+                      >
+                        {c.name.split(" ")[0]} ({c.demandIndex})
+                      </text>
+                    </g>
+                  </g>
+                );
+              })}
+            </svg>
+          )}
 
           {/* Liquid Glass Dynamic Tooltip when Hovered */}
-          {hoveredCluster && (
+          {hoveredCluster && geoData && (
             <div
               className="absolute pointer-events-none z-30 transition-all duration-200"
               style={{
-                left: `${(hoveredCluster.coordinates.x / 600) * 100}%`,
-                top: `${(hoveredCluster.coordinates.y / 650) * 100 - 15}%`,
+                left: (() => {
+                  const p = projection([hoveredCluster.coordinates.lng, hoveredCluster.coordinates.lat]);
+                  return p ? `${(p[0] / 600) * 100}%` : '50%';
+                })(),
+                top: (() => {
+                  const p = projection([hoveredCluster.coordinates.lng, hoveredCluster.coordinates.lat]);
+                  return p ? `calc(${(p[1] / 650) * 100}% - 35px)` : '50%';
+                })(),
                 transform: "translate(-50%, -100%)",
               }}
             >
-              <div className="px-3 py-2 rounded-xl bg-[#FFFDF8]/95 backdrop-blur-md border border-[#B96D43]/25 shadow-lg text-xs space-y-0.5">
+              <div className="px-3 py-2 rounded-xl bg-[#FFFDF8]/95 backdrop-blur-md border border-[#B96D43]/25 shadow-lg text-xs space-y-0.5 whitespace-nowrap">
                 <div className="font-bold text-[#49372A]">{hoveredCluster.name}</div>
                 <div className="text-[10px] text-[#6E5D53]">
                   Artisans: <strong className="text-[#49372A]">{hoveredCluster.artisanCount.toLocaleString("en-IN")}</strong> | Index: <strong className="text-[#B96D43]">{hoveredCluster.demandIndex}</strong>
@@ -225,9 +343,16 @@ export const IndiaMap: React.FC = () => {
             </div>
           )}
 
-          <div className="absolute bottom-3 left-4 text-[10px] text-[#6E5D53] font-mono font-medium flex items-center gap-1.5">
+          <div className="absolute bottom-4 left-4 text-[10px] text-[#8C7A6B] font-mono font-bold flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-[#3F7A61]" />
-            <span>Interactive Fixed Geometry: Click corridor to inspect telemetry</span>
+            <span>Real GeoJSON Projection • Static Bounds</span>
+          </div>
+          
+          {/* Legend Dots Bottom Right */}
+          <div className="absolute bottom-6 right-6 flex flex-col gap-2">
+            <div className="w-3 h-3 rounded-full bg-[#B96D43] opacity-60"></div>
+            <div className="w-3 h-3 rounded-full bg-[#B96D43] opacity-60"></div>
+            <div className="w-3 h-3 rounded-full bg-[#B96D43] opacity-60"></div>
           </div>
         </div>
 
