@@ -141,11 +141,16 @@ export const Sidebar = ({ isCollapsed = false }: { isCollapsed?: boolean }) => {
       {/* Footer System Status */}
       <div className="p-3 border-t border-[#B96D43]/14 text-[#6E5D53] space-y-2">
         <Link
-          href="/"
-          className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs hover:text-[#49372A] hover:bg-[#B96D43]/08 transition-colors"
+          href="/settings"
+          className={cn(
+            "flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors",
+            pathname === "/settings"
+              ? "bg-[#B96D43]/10 text-[#49372A] font-bold border border-[#B96D43]/20 shadow-sm"
+              : "hover:text-[#49372A] hover:bg-[#B96D43]/08 border border-transparent"
+          )}
           title={isCollapsed ? "Settings" : undefined}
         >
-          <Settings className="w-4 h-4 text-[#6E5D53]" />
+          <Settings className={cn("w-4 h-4", pathname === "/settings" ? "text-[#49372A]" : "text-[#6E5D53]")} />
           {!isCollapsed && <span>System Settings</span>}
         </Link>
 
