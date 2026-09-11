@@ -20,12 +20,6 @@ export default function CraftsPage() {
       title="Craft Intelligence & GI Registry"
       description="Comprehensive taxonomy and telemetry for India's living handicrafts, Geographical Indication (GI) certifications, and preservation health."
       badge="142 REGISTERED ENTITIES"
-      actions={
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#B8794A] to-[#965C34] text-white text-xs font-bold hover:brightness-105 shadow-md transition-all active:scale-95 cursor-pointer">
-          <Plus className="w-3.5 h-3.5" />
-          <span>Register New GI Craft</span>
-        </button>
-      }
     >
       {/* Category Pills & Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#B8794A]/12">

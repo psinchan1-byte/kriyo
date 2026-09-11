@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen w-full relative flex flex-col md:flex-row overflow-hidden bg-[#FCF8F0]">
+    <div className="min-h-screen w-full relative flex flex-col md:flex-row overflow-hidden bg-[#FFFFFF]">
       {/* Full-screen Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -20,7 +20,7 @@ export default function LoginPage() {
           className="object-cover object-center"
         />
         {/* Subtle warm ivory overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FCF8F0]/90 via-[#FCF8F0]/60 to-[#FCF8F0]/30 mix-blend-normal"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FFFFFF]/90 via-[#FFFFFF]/60 to-[#FFFFFF]/30 mix-blend-normal"></div>
         
         {/* Decorative corner motifs (subtle) */}
         <div className="absolute top-0 left-0 w-64 h-64 opacity-5 pointer-events-none">

@@ -16,11 +16,11 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   ...props
 }) => {
   const variantStyles = {
-    default: "bg-[#FFFDF8]/78 backdrop-blur-xl border border-[#B96D43]/14 shadow-glass",
-    elevated: "bg-[#FFFDF8]/90 backdrop-blur-2xl border border-white border-b-[#B96D43]/20 shadow-glass-elevated",
-    highlighted: "bg-gradient-to-b from-[#B96D43]/10 to-[#FFFDF8]/85 backdrop-blur-xl border border-[#B96D43]/28 shadow-glass",
+    default: "bg-[var(--card-background)] backdrop-blur-xl border border-[#B96D43]/14 shadow-glass",
+    elevated: "bg-[var(--card-background)] backdrop-blur-2xl border border-white border-b-[#B96D43]/20 shadow-glass-elevated",
+    highlighted: "bg-gradient-to-b from-[#B96D43]/10 to-[var(--card-background)] backdrop-blur-xl border border-[#B96D43]/28 shadow-glass",
     interactive: "glass-card-interactive cursor-pointer",
-    subtle: "bg-[#EFE6D7]/50 backdrop-blur-md border border-[#B96D43]/10 shadow-sm",
+    subtle: "bg-[var(--card-background)] bg-opacity-50 backdrop-blur-md border border-[#B96D43]/10 shadow-sm",
   };
 
   const glowStyles = {

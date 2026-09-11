@@ -153,12 +153,6 @@ export default function ArtisansPage() {
       title="Artisan Intelligence & Master Guilds"
       description="Rosters of India's living master craftspeople, verified cooperative guilds, apprenticeship ratios, and direct fair-trade credentials."
       badge="12,482 VERIFIED ARTISANS"
-      actions={
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#B8794A] to-[#965C34] text-white text-xs font-bold hover:brightness-105 shadow-md transition-all active:scale-95 cursor-pointer">
-          <Plus className="w-3.5 h-3.5" />
-          <span>Onboard Artisan Guild</span>
-        </button>
-      }
     >
       {/* Search & Toolbar */}
       <div className="flex flex-col gap-4 pb-4 border-b border-[#B8794A]/12">
@@ -379,7 +373,7 @@ export default function ArtisansPage() {
       {/* Modal */}
       {selectedArtisan && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setSelectedArtisan(null)}>
-          <div className="bg-[#FCF8F0] w-full max-w-lg rounded-2xl shadow-xl overflow-hidden animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
+          <div className="bg-[var(--card-background)] w-full max-w-lg rounded-2xl shadow-xl overflow-hidden animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
             <div className="p-6 border-b border-[#B8794A]/20 flex justify-between items-start bg-white/50">
               <div>
                 <h2 className="text-xl font-bold text-[#2C221E] flex items-center gap-2">

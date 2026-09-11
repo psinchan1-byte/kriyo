@@ -9,6 +9,19 @@ export function useDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const refresh = async () => {
+    setLoading(true);
+    try {
+      const res = await fetchDashboardMetrics();
+      setData(res);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message || "Failed to fetch dashboard metrics");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
@@ -32,5 +45,5 @@ export function useDashboard() {
     };
   }, []);
 
-  return { data, loading, error };
+  return { data, loading, error, refresh };
 }

@@ -179,12 +179,6 @@ export default function ProductsPage() {
       title="Product Catalog & Provenance Analytics"
       description="Handcrafted item inventory with verified natural material trace certifications, artisan attribution, and demand engagement telemetry."
       badge="48,920 CATALOG ITEMS"
-      actions={
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-heritage-terracotta to-heritage-terracotta-dark text-white text-xs font-semibold hover:brightness-110 shadow-glow-terracotta transition-all active:scale-95 cursor-pointer">
-          <Plus className="w-3.5 h-3.5" />
-          <span>Mint Provenance Certificate</span>
-        </button>
-      }
     >
       {/* Search Header */}
       <div className="flex flex-col gap-4 pb-4 border-b border-[#B8794A]/14">
@@ -463,7 +457,7 @@ export default function ProductsPage() {
       {/* Modal */}
       {selectedProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}>
-          <div className="bg-[#FCF8F0] w-full max-w-xl rounded-2xl shadow-xl overflow-hidden animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
+          <div className="bg-[var(--card-background)] w-full max-w-xl rounded-2xl shadow-xl overflow-hidden animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
             <div className="p-6 border-b border-[#B8794A]/20 flex justify-between items-start bg-white/50">
               <div>
                 <h2 className="text-xl font-bold text-[#2C221E]">{selectedProduct.title}</h2>

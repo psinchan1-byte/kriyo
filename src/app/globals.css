@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 :root {
+  --page-background: #FFFFFF;
+  --sidebar-background: rgba(255, 250, 241, 0.70);
+  --card-background: #F4E8D5;
   --background: #E8D7C0;
   --foreground: #33251D;
   --surface-base: #E8D7C0;
   --surface-panel: #E1CDB2;
-  --surface-card: rgba(255, 250, 241, 0.72);
+  --surface-card: var(--card-background);
   --border-glass: rgba(255, 255, 255, 0.72);
   --border-subtle: rgba(121, 88, 60, 0.16);
   --accent-terracotta: #B96A3D;
@@ -30,7 +33,7 @@
 html,
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: var(--page-background);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Geist", "Inter", sans-serif;
   margin: 0;
   padding: 0;
@@ -47,7 +50,7 @@ body {
 
 /* iOS 27 Liquid Glass Panels & Cards */
 .glass-panel {
-  background: rgba(255, 250, 241, 0.70);
+  background: var(--sidebar-background);
   backdrop-filter: blur(20px) saturate(125%);
   -webkit-backdrop-filter: blur(20px) saturate(125%);
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -55,7 +58,7 @@ body {
 }
 
 .glass-panel-elevated {
-  background: rgba(255, 250, 241, 0.85);
+  background: var(--card-background);
   backdrop-filter: blur(24px) saturate(135%);
   -webkit-backdrop-filter: blur(24px) saturate(135%);
   border: 1px solid rgba(255, 255, 255, 0.85);
@@ -63,7 +66,7 @@ body {
 }
 
 .glass-card-interactive {
-  background: rgba(255, 250, 241, 0.70);
+  background: var(--card-background);
   backdrop-filter: blur(20px) saturate(125%);
   -webkit-backdrop-filter: blur(20px) saturate(125%);
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -72,15 +75,16 @@ body {
 }
 
 .glass-card-interactive:hover {
-  background: rgba(255, 250, 241, 0.85);
+  background: var(--card-background);
   border-color: rgba(255, 255, 255, 0.85);
   box-shadow: 0 12px 36px rgba(87, 60, 38, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
   transform: translateY(-2px);
+  filter: brightness(1.02);
 }
 
 /* Specialty Liquid Glass Bar Classes */
 .liquid-glass-nav {
-  background: rgba(255, 250, 241, 0.70);
+  background: var(--sidebar-background);
   backdrop-filter: blur(20px) saturate(125%);
   -webkit-backdrop-filter: blur(20px) saturate(125%);
   border: 1px solid rgba(255, 255, 255, 0.72);

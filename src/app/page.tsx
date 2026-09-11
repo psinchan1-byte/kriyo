@@ -15,8 +15,15 @@ import { CraftPerformanceTable } from "@/components/dashboard/CraftPerformanceTa
 import { Loading } from "@/components/common/Loading";
 
 export default function OverviewPage() {
-  const { data: metrics, loading: metricsLoading } = useDashboard();
+  const { data: metrics, loading: metricsLoading, refresh } = useDashboard();
   const { crafts, loading: craftsLoading } = useCrafts();
+
+  const handleExport = () => {
+    // We will pass this down or handle it here
+    // Actually it's easier to handle export logic inside OverviewHero
+    // but I'll pass a flag or handle it directly here if needed.
+    // Let's handle it in OverviewHero directly so we can contain the loading state easily.
+  };
 
   if (metricsLoading || !metrics) {
     return (
@@ -29,7 +36,7 @@ export default function OverviewPage() {
   return (
     <div className="flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full space-y-6">
       {/* 1. Executive Telemetry Hero Greeting */}
-      <OverviewHero />
+      <OverviewHero onRefresh={refresh} metrics={metrics} />
 
       {/* 2. Executive KPI Metrics Grid (8 Cards) */}
       <KPIGrid metrics={metrics} />

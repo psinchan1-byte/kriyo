@@ -205,7 +205,7 @@ export default function AuthForm() {
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-[rgba(139,69,19,0.15)]"></div>
         </div>
-        <div className="relative px-4 bg-[#FCF8F0] bg-opacity-0 text-xs text-[#8B6B5D] uppercase tracking-wider backdrop-blur-[2px]">
+        <div className="relative px-4 bg-[#FFFFF0] bg-opacity-0 text-xs text-[#8B6B5D] uppercase tracking-wider backdrop-blur-[2px]">
           OR
         </div>
       </div>

@@ -17,20 +17,20 @@ export const HeritageArtworkBackground: React.FC = () => {
       <div
         className="absolute -top-44 -left-44 w-[32rem] h-[32rem] rounded-full blur-3xl opacity-40 mix-blend-multiply animate-ambient-sphere"
         style={{
-          background: "radial-gradient(circle, rgba(199, 162, 124, 0.28) 0%, rgba(246, 241, 232, 0) 70%)",
+          background: "radial-gradient(circle, rgba(199, 162, 124, 0.28) 0%, rgba(255, 255, 255, 0) 70%)",
         }}
       />
       <div
         className="absolute top-1/3 -right-24 w-[34rem] h-[34rem] rounded-full blur-3xl opacity-35 mix-blend-multiply animate-ambient-sphere"
         style={{
-          background: "radial-gradient(circle, rgba(185, 109, 67, 0.22) 0%, rgba(246, 241, 232, 0) 70%)",
+          background: "radial-gradient(circle, rgba(185, 109, 67, 0.22) 0%, rgba(255, 255, 255, 0) 70%)",
           animationDelay: "-8s",
         }}
       />
       <div
         className="absolute -bottom-36 left-1/3 w-[36rem] h-[36rem] rounded-full blur-3xl opacity-30 mix-blend-multiply animate-ambient-sphere"
         style={{
-          background: "radial-gradient(circle, rgba(181, 138, 80, 0.20) 0%, rgba(246, 241, 232, 0) 70%)",
+          background: "radial-gradient(circle, rgba(181, 138, 80, 0.20) 0%, rgba(255, 255, 255, 0) 70%)",
           animationDelay: "-16s",
         }}
       />
