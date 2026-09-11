@@ -6,15 +6,24 @@ import { IndiaMap } from "@/components/common/IndiaMap";
 import { GlassCard } from "@/components/common/GlassCard";
 import { Compass, MapPin, Users, TrendingUp, ShieldCheck } from "lucide-react";
 
+import { fetchIntelligence } from "@/lib/api";
+
 export default function GeographyPage() {
-  const stateRankings = [
-    { state: "Bihar", artisans: 3840, demandIndex: 96, topCraft: "Madhubani Painting", status: "Thriving" },
-    { state: "Rajasthan", artisans: 3120, demandIndex: 92, topCraft: "Blue Pottery", status: "Thriving" },
-    { state: "Jammu & Kashmir", artisans: 2450, demandIndex: 89, topCraft: "Kashmir Pashmina", status: "Stable" },
-    { state: "Karnataka", artisans: 1890, demandIndex: 85, topCraft: "Channapatna Toys", status: "Vulnerable" },
-    { state: "Chhattisgarh", artisans: 1182, demandIndex: 81, topCraft: "Dokra Bell Metal", status: "Vulnerable" },
-    { state: "Tamil Nadu", artisans: 420, demandIndex: 78, topCraft: "Toda Embroidery", status: "Endangered" },
-  ];
+  const [stateRankings, setStateRankings] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    fetchIntelligence().then(intel => {
+      // Flatten regional states into rankings
+      const rankings = intel.geography.map((g) => ({
+        state: g.states[0] || g.region, // simplifying to represent top state per region
+        artisans: g.artisanCount,
+        demandIndex: g.demandVelocity,
+        topCraft: g.topCrafts[0] || "Various",
+        status: g.demandVelocity > 80 ? "Thriving" : (g.demandVelocity > 60 ? "Stable" : "Vulnerable")
+      })).sort((a, b) => b.demandIndex - a.demandIndex);
+      setStateRankings(rankings);
+    });
+  }, []);
 
   return (
     <PageContainer

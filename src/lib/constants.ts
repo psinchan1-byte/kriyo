@@ -1,4 +1,4 @@
-export const PLATFORM_NAME = "KAARIGAR SETU";
+export const PLATFORM_NAME = "KRIYO";
 export const PLATFORM_TAGLINE = "Living Heritage & Craft Intelligence Engine";
 
 export interface NavItem {

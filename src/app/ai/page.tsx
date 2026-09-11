@@ -6,27 +6,22 @@ import { AIIntelligenceCard } from "@/components/dashboard/AIIntelligenceCard";
 import { GlassCard } from "@/components/common/GlassCard";
 import { Sparkles, BrainCircuit, TrendingUp, Zap, ShieldCheck, ArrowRight } from "lucide-react";
 
+import { fetchIntelligence } from "@/lib/api";
+
 export default function AIPage() {
-  const predictiveModels = [
-    {
-      title: "Fair-Wage Dynamic Price Elasticity",
-      description: "Machine-learned price tolerance curves ensuring master artisans capture maximum surplus without dampening conversion rates.",
-      accuracy: "94.8%",
-      recommendation: "Increase ceiling by 12% on GI-certified Pashmina stoles during Q3 festive procurement.",
-    },
-    {
-      title: "Cluster Raw Material Depletion Predictor",
-      description: "Sensor & cooperative trade ledger analysis predicting natural beeswax and copper scrap shortages in Bastar metallurgical cluster.",
-      accuracy: "91.2%",
-      recommendation: "Pre-order raw beeswax buffer for 280 Dokra casting artisans 45 days ahead of festival demand.",
-    },
-    {
-      title: "Apprentice Succession Pipeline Risk Model",
-      description: "Demographic attrition model evaluating generational migration among master weavers aged 60+.",
-      accuracy: "96.4%",
-      recommendation: "Deploy Phase-2 revival subsidy to Nilgiris Toda embroidery community.",
-    },
-  ];
+  const [predictiveModels, setPredictiveModels] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    fetchIntelligence().then(intel => {
+      const models = intel.aiSignals.map((sig) => ({
+        title: sig.craft + " " + sig.trend + " Trend",
+        description: sig.signal + " Drivers: " + sig.drivers.join(', ') + ".",
+        accuracy: sig.confidence + "%",
+        recommendation: sig.recommendation,
+      }));
+      setPredictiveModels(models);
+    });
+  }, []);
 
   return (
     <PageContainer

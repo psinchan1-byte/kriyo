@@ -4,17 +4,32 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { HeritageArtworkBackground } from "@/components/layout/HeritageArtworkBackground";
 import { PLATFORM_NAME, PLATFORM_TAGLINE } from "@/lib/constants";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: `${PLATFORM_NAME} — Heritage Intelligence Platform`,
   description: `${PLATFORM_TAGLINE}. Real-time monitoring, AI telemetry, and preservation intelligence for India's craft ecosystem.`,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
+  const isLoginPage = pathname.startsWith("/login");
+
+  if (isLoginPage) {
+    return (
+      <html lang="en" className="light">
+        <body className="antialiased min-h-screen bg-[#FCF8F0] font-sans">
+          {children}
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="en" className="light">
       <body className="antialiased h-screen overflow-hidden bg-heritage-bg text-earth-dark relative font-sans">

@@ -258,7 +258,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
             <span>↵ Select</span>
             <span>ESC Close</span>
           </div>
-          <span className="text-[#B8794A] font-semibold">KAARIGAR SETU • Omnisearch</span>
+          <span className="text-[#B8794A] font-semibold">KRIYO • Omnisearch</span>
         </div>
       </div>
     </div>

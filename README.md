@@ -1,4 +1,4 @@
-# KAARIGAR SETU Intelligence Web
+# KRIYO Intelligence Platform
 
 > A Web-Based Monitoring and Intelligence Platform for Traditional Indian Artisans, Crafts, and Cultural Heritage Preservation.
 
