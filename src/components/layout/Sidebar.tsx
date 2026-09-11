@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -35,9 +35,8 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   "/revival": <ShieldAlert className="w-4 h-4 shrink-0" />,
 };
 
-export const Sidebar: React.FC = () => {
+export const Sidebar = ({ isCollapsed = false }: { isCollapsed?: boolean }) => {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
     <aside
@@ -46,14 +45,6 @@ export const Sidebar: React.FC = () => {
         isCollapsed ? "w-20" : "w-[260px]"
       )}
     >
-      {/* Collapse / Expand Toggle Button */}
-      <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3 top-20 w-6 h-6 rounded-full bg-[#FFFDF8] border border-[#B96D43]/20 text-[#6E5D53] hover:text-[#B96D43] flex items-center justify-center shadow-md transition-transform hover:scale-110 z-50 cursor-pointer"
-        title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-      >
-        {isCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
-      </button>
 
       {/* Brand Header */}
       <div className="h-16 flex items-center px-4 border-b border-[#B96D43]/14 gap-3">
