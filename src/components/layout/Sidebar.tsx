@@ -87,6 +87,7 @@ export const Sidebar = ({ isCollapsed = false }: { isCollapsed?: boolean }) => {
                 <Link
                   key={item.href}
                   href={item.href}
+                  prefetch={true}
                   title={isCollapsed ? item.name : undefined}
                   className={cn(
                     "flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-all relative group cursor-pointer",
