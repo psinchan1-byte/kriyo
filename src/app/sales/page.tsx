@@ -19,6 +19,77 @@ import {
 
 export default function SalesPage() {
   const { analytics, recentOrders, loading } = useAnalytics();
+  const [isExporting, setIsExporting] = React.useState(false);
+
+  const handleExport = async () => {
+    if (isExporting || !analytics || !recentOrders.length) return;
+    setIsExporting(true);
+    
+    try {
+      const { jsPDF } = await import("jspdf");
+      const autoTable = (await import("jspdf-autotable")).default;
+      
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const margin = 20;
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("KRIYO", margin, margin);
+      
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+      doc.text("Sales & Fair-Trade Commerce Analytics", margin, margin + 6);
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.text("PAYOUT LEDGER", margin, margin + 18);
+      
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Generated: ${new Date().toLocaleString()}`, margin, margin + 26);
+      
+      doc.line(margin, margin + 30, pageWidth - margin, margin + 30);
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("FINANCIAL SUMMARY", margin, margin + 40);
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text(`Gross Sales Turnover: INR ${analytics.grossRevenue.toLocaleString('en-IN')}`, margin, margin + 48);
+      doc.text(`Artisan Direct Payout (80% Escrow): INR ${analytics.artisanDirectPayout.toLocaleString('en-IN')}`, margin, margin + 54);
+      doc.text(`Total Orders Fulfilled: ${analytics.totalOrders.toLocaleString('en-IN')}`, margin, margin + 60);
+      doc.text(`Average Order Value: INR ${analytics.averageOrderValue.toLocaleString('en-IN')}`, margin, margin + 66);
+
+      const tableData = recentOrders.map(order => [
+        order.orderNumber,
+        order.customerName,
+        order.items[0]?.productTitle || 'N/A',
+        formatDate(order.orderDate),
+        order.status,
+        `INR ${order.totalAmount.toLocaleString('en-IN')}`
+      ]);
+
+      autoTable(doc, {
+        startY: margin + 76,
+        head: [['Order Number', 'Buyer', 'Item', 'Date', 'Status', 'Total']],
+        body: tableData,
+        theme: 'grid',
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [184, 121, 74] } // heritage-terracotta
+      });
+
+      const dateStr = new Date().toISOString().split('T')[0];
+      doc.save(`KRIYO_Payout_Ledger_${dateStr}.pdf`);
+      
+    } catch (error) {
+      console.error(error);
+      alert("Unable to export ledger.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   if (loading || !analytics) {
     return (
@@ -34,9 +105,17 @@ export default function SalesPage() {
       description="Transparent transaction ledger tracking gross platform sales turnover, average order values, and guaranteed direct artisan bank transfers."
       badge="₹18.42 CR GROSS TURNOVER"
       actions={
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-heritage-terracotta to-heritage-terracotta-dark text-white text-xs font-semibold hover:brightness-110 shadow-glow-terracotta transition-all active:scale-95 cursor-pointer">
-          <Download className="w-3.5 h-3.5" />
-          <span>Export Payout Ledger</span>
+        <button 
+          onClick={handleExport}
+          disabled={isExporting}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-heritage-terracotta to-heritage-terracotta-dark text-white text-xs font-semibold hover:brightness-110 shadow-glow-terracotta transition-all active:scale-95 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {isExporting ? <span className="animate-pulse">Generating PDF...</span> : (
+            <>
+              <Download className="w-3.5 h-3.5" />
+              <span>Export Payout Ledger</span>
+            </>
+          )}
         </button>
       }
     >

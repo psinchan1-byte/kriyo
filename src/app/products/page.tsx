@@ -339,118 +339,154 @@ export default function ProductsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {sortedAndFiltered.map((product, idx) => (
-            <GlassCard
-              key={product.id}
-              variant="interactive"
-              className="relative group overflow-hidden flex flex-col h-full cursor-pointer"
-              onClick={() => setSelectedProduct(product)}
-            >
-              {/* Image Header */}
-              <div className="h-40 w-full relative shrink-0 bg-[#EFE7DA]">
-                <img
-                  src={
-                    product.category === "PAINTING"
-                      ? "https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?q=80&w=800&auto=format&fit=crop"
-                      : product.category === "METALWORK"
-                      ? "https://images.unsplash.com/photo-1533558701576-23c65e0272fb?q=80&w=800&auto=format&fit=crop"
-                      : product.category === "TEXTILES"
-                      ? "https://images.unsplash.com/photo-1528318269466-69d9205561a7?q=80&w=800&auto=format&fit=crop"
-                      : "https://images.unsplash.com/photo-1528318269466-69d9205561a7?q=80&w=800&auto=format&fit=crop" // fallback
-                  }
-                  alt={product.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                
-                <div className="absolute top-4 left-4 right-4 flex items-start justify-between z-10">
-                  <span className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-heritage-terracotta font-bold bg-[#FFFDF8]/90 px-2.5 py-1 rounded-md border border-heritage-terracotta/20 shadow-sm backdrop-blur-md">
-                    <div className="w-1.5 h-1.5 rounded-full bg-heritage-terracotta" />
-                    {product.category}
-                  </span>
-                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold backdrop-blur-md shadow-sm border ${
-                    product.stock > 5 ? "bg-[#DCEDE3]/90 text-heritage-green border-heritage-green/30" : 
-                    product.stock > 0 ? "bg-[#FDF3E1]/90 text-[#B8794A] border-[#B8794A]/30" : 
-                    "bg-[#FDE1E1]/90 text-red-600 border-red-600/30"
-                  }`}>
-                    {getStockStatusLabel(product.stock)} ({product.stock})
-                  </span>
-                </div>
-              </div>
+          {sortedAndFiltered.map((product, idx) => {
+            const getCraftImage = (craftName: string) => {
+              const lowerCraft = craftName.toLowerCase();
+              if (lowerCraft.includes("kanchipuram") || lowerCraft.includes("mysore") || lowerCraft.includes("silk")) {
+                return "/images/products/kanchipuram-silk.jpg";
+              }
+              if (lowerCraft.includes("banarasi") || lowerCraft.includes("brocade")) {
+                return "/images/products/banarasi-brocade.jpg";
+              }
+              if (lowerCraft.includes("grass") || lowerCraft.includes("sikki")) {
+                return "/images/products/sikki-grass.jpg";
+              }
+              if (lowerCraft.includes("madhubani") || lowerCraft.includes("kalamkari") || lowerCraft.includes("tanjore")) {
+                return "/images/products/madhubani.jpg";
+              }
+              if (lowerCraft.includes("pattachitra") || lowerCraft.includes("painting")) {
+                return "/images/products/pattachitra.jpg";
+              }
+              if (lowerCraft.includes("pottery") || lowerCraft.includes("blue pottery")) {
+                return "/images/products/blue-pottery.jpg";
+              }
+              if (lowerCraft.includes("toys") || lowerCraft.includes("wood")) {
+                return "/images/products/channapatna.jpg";
+              }
+              if (lowerCraft.includes("pashmina") || lowerCraft.includes("shawl")) {
+                return "/images/products/pashmina.jpg";
+              }
+              if (lowerCraft.includes("ikat")) {
+                return "/images/products/banarasi-brocade.jpg";
+              }
+              if (lowerCraft.includes("dhokra") || lowerCraft.includes("metal")) {
+                return "/images/products/dokra.jpg";
+              }
+              return "/images/products/fallback.jpg";
+            };
 
-              <div className="p-5 flex-1 flex flex-col relative z-10 bg-gradient-to-b from-transparent to-white/30">
-                <h3 className="text-sm font-bold text-earth-dark group-hover:text-heritage-terracotta transition-colors line-clamp-1">
-                  {product.title}
-                </h3>
-                
-                <div className="mt-2 space-y-1 text-xs">
-                  <div className="text-earth-slate">
-                    Craft: <strong className="text-earth-dark">{product.craftName}</strong>
-                  </div>
-                  <div className="text-earth-muted">
-                    Master Artisan: <strong className="text-earth-dark">{product.artisanName}</strong>
-                  </div>
-                </div>
+            const imageUrl = getCraftImage(product.craftName);
 
-                {/* Provenance Box */}
-                <div className="mt-4 p-3 rounded-xl bg-heritage-bg/60 border border-heritage-border text-xs space-y-2.5">
-                  <div className="flex items-center justify-between text-[11px] text-earth-slate font-mono">
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-heritage-gold" />
-                      {product.provenance.handcraftingDurationDays} Days
+            return (
+              <GlassCard
+                key={product.id}
+                variant="interactive"
+                className="relative group overflow-hidden flex flex-col h-full cursor-pointer bg-[#FFFCF7] border border-[rgba(120,75,40,0.10)] shadow-[0_4px_18px_rgba(80,50,30,0.06)] !rounded-2xl"
+                onClick={() => setSelectedProduct(product)}
+              >
+                {/* Image Header */}
+                <div className="h-[190px] w-full relative shrink-0 bg-[#F6F1E8] overflow-hidden rounded-t-2xl">
+                  <img
+                    src={imageUrl}
+                    alt={`${product.craftName} product`}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-250 ease-in-out group-hover:scale-[1.02]"
+                    loading={idx < 6 ? "eager" : "lazy"}
+                    onError={(e) => {
+                      if (e.currentTarget.src !== window.location.origin + "/images/products/fallback.jpg") {
+                        e.currentTarget.src = "/images/products/fallback.jpg";
+                      }
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                  
+                  <div className="absolute top-4 left-4 right-4 flex items-start justify-between z-10 pointer-events-none">
+                    <span className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-heritage-terracotta font-bold bg-[#FFFDF8]/95 px-2.5 py-1 rounded-md border border-heritage-terracotta/20 shadow-sm backdrop-blur-md">
+                      <div className="w-1.5 h-1.5 rounded-full bg-heritage-terracotta" />
+                      {product.category}
                     </span>
-                    {isGIAuthenticated(product.id) && (
-                      <span className="flex items-center gap-1 text-heritage-green font-bold">
-                        <ShieldCheck className="w-3.5 h-3.5" />
-                        GI Authenticated
+                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold backdrop-blur-md shadow-sm border ${
+                      product.stock > 5 ? "bg-[#DCEDE3]/95 text-heritage-green border-heritage-green/30" : 
+                      product.stock > 0 ? "bg-[#FDF3E1]/95 text-[#B8794A] border-[#B8794A]/30" : 
+                      "bg-[#FDE1E1]/95 text-red-600 border-red-600/30"
+                    }`}>
+                      {getStockStatusLabel(product.stock)}
+                    </span>
+                  </div>
+                </div>
+  
+                <div className="p-5 flex-1 flex flex-col relative z-10">
+                  <h3 className="text-sm font-bold text-earth-dark group-hover:text-heritage-terracotta transition-colors line-clamp-1">
+                    {product.title}
+                  </h3>
+                  
+                  <div className="mt-2 space-y-1 text-xs">
+                    <div className="text-earth-slate">
+                      Craft: <strong className="text-earth-dark">{product.craftName}</strong>
+                    </div>
+                    <div className="text-earth-muted">
+                      Master Artisan: <strong className="text-earth-dark">{product.artisanName}</strong>
+                    </div>
+                  </div>
+  
+                  {/* Provenance Box */}
+                  <div className="mt-4 p-3 rounded-xl bg-[#F6F1E8]/50 border border-[rgba(120,75,40,0.10)] text-xs space-y-2.5">
+                    <div className="flex items-center justify-between text-[11px] text-earth-slate font-mono">
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-heritage-gold" />
+                        {product.provenance.handcraftingDurationDays} Days
                       </span>
-                    )}
+                      {isGIAuthenticated(product.id) && (
+                        <span className="flex items-center gap-1 text-heritage-green font-bold">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          GI Authenticated
+                        </span>
+                      )}
+                    </div>
+  
+                    <div className="flex items-center gap-1.5 flex-wrap pt-1">
+                      {product.provenance.rawMaterials.map((mat, i) => (
+                        <span
+                          key={i}
+                          className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-white/70 text-earth-slate border border-[rgba(120,75,40,0.10)] shadow-sm"
+                        >
+                          {mat}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-
-                  <div className="flex items-center gap-1.5 flex-wrap pt-1">
-                    <Layers className="w-3.5 h-3.5 text-earth-muted shrink-0" />
-                    {product.provenance.rawMaterials.map((mat, i) => (
-                      <span
-                        key={i}
-                        className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-white/70 text-earth-slate border border-heritage-border/50 shadow-sm"
-                      >
-                        {mat}
+  
+                  <div className="flex-1"></div>
+  
+                  {/* Price & Engagement Footer */}
+                  <div className="mt-5 pt-4 border-t border-[rgba(120,75,40,0.10)] flex items-end justify-between">
+                    <div>
+                      <span className="text-[9px] text-earth-muted font-mono uppercase font-bold block mb-0.5">
+                        Fair-Trade Price
                       </span>
-                    ))}
+                      <span className="text-lg font-black text-earth-dark num-display">
+                        {formatCurrencyINR(product.price)}
+                      </span>
+                    </div>
+  
+                    <div className="flex items-center gap-2.5 text-xs text-earth-slate font-mono">
+                      <span className="flex items-center gap-1" title="Views">
+                        <Eye className="w-3.5 h-3.5 text-earth-muted" />
+                        {product.engagement.views}
+                      </span>
+                      <span className="flex items-center gap-1" title="Likes">
+                        <Heart className="w-3.5 h-3.5 text-heritage-red" />
+                        {product.engagement.likes}
+                      </span>
+                      <span className="flex items-center gap-1" title="Saves">
+                        <Bookmark className="w-3.5 h-3.5 text-heritage-gold" />
+                        {product.engagement.saves}
+                      </span>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex-1"></div>
-
-                {/* Price & Engagement Footer */}
-                <div className="mt-5 pt-4 border-t border-heritage-border/60 flex items-end justify-between">
-                  <div>
-                    <span className="text-[9px] text-earth-muted font-mono uppercase font-bold block mb-0.5">
-                      Fair-Trade Price
-                    </span>
-                    <span className="text-lg font-black text-earth-dark num-display">
-                      {formatCurrencyINR(product.price)}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 text-xs text-earth-slate font-mono">
-                    <span className="flex items-center gap-1" title="Views">
-                      <Eye className="w-3.5 h-3.5 text-earth-muted" />
-                      {product.engagement.views}
-                    </span>
-                    <span className="flex items-center gap-1" title="Likes">
-                      <Heart className="w-3.5 h-3.5 text-heritage-red" />
-                      {product.engagement.likes}
-                    </span>
-                    <span className="flex items-center gap-1" title="Saves">
-                      <Bookmark className="w-3.5 h-3.5 text-heritage-gold" />
-                      {product.engagement.saves}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </GlassCard>
-          ))}
+              </GlassCard>
+            );
+          })}
         </div>
       )}
 

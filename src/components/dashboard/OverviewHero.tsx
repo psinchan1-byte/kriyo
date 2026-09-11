@@ -22,13 +22,18 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({ onRefresh, metrics }
   const [isExporting, setIsExporting] = useState(false);
   const [lastSynced, setLastSynced] = useState("2 mins ago");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [currentDate, setCurrentDate] = useState<string>("");
 
-  const currentDate = new Date().toLocaleDateString("en-IN", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  useEffect(() => {
+    setCurrentDate(
+      new Date().toLocaleDateString("en-IN", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    );
+  }, []);
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -63,26 +68,105 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({ onRefresh, metrics }
       // Simulate generating report
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      const csvContent = "KRIYO INTELLIGENCE REPORT\\n" + 
-        `Generated: ${new Date().toLocaleString()}\\n\\n` +
-        "METRIC,VALUE\\n" +
-        `Total Artisans,${metrics?.totalArtisans || 12482}\\n` +
-        `Active Crafts,${metrics?.totalCrafts || 142}\\n` +
-        `Total Products,${metrics?.totalProducts || 45910}\\n` +
-        `Total Orders,${metrics?.totalOrders || 8920}\\n` +
-        `Total Revenue,₹${metrics?.grossRevenue || 12400000}\\n`;
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const margin = 20;
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("KRIYO", margin, margin);
+      
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+      doc.text("Heritage Intelligence Platform", margin, margin + 6);
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.text("INTELLIGENCE REPORT", margin, margin + 18);
+      
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Generated: ${new Date().toLocaleString()}`, margin, margin + 26);
+      doc.text(`Selected Period: Last 30 Days`, margin, margin + 32);
+      
+      doc.line(margin, margin + 36, pageWidth - margin, margin + 36);
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("EXECUTIVE SUMMARY", margin, margin + 46);
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      let y = margin + 54;
+      doc.text(`Total Artisans: ${metrics?.totalArtisans || 12482}`, margin, y); y += 6;
+      doc.text(`Active Crafts: ${metrics?.totalCrafts || 142}`, margin, y); y += 6;
+      doc.text(`Total Products: ${metrics?.totalProducts || 45910}`, margin, y); y += 6;
+      doc.text(`Total Orders: ${metrics?.totalOrders || 8920}`, margin, y); y += 6;
+      doc.text(`Total Revenue: INR ${(metrics?.grossRevenue || 12400000).toLocaleString('en-IN')}`, margin, y); y += 6;
+      doc.text(`Active Buyers: ${metrics?.activeBuyers || 4102}`, margin, y); y += 6;
+      doc.text(`Engagement Velocity: +${metrics?.engagementTrendPercent || 31.4}%`, margin, y); y += 6;
+      doc.text(`Crafts at Risk: ${metrics?.craftsAtRisk || 26}`, margin, y); y += 12;
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("MARKET INTELLIGENCE", margin, y); y += 8;
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text("Current AI market signals point to a 34% increase in demand for Madhubani", margin, y); y += 6;
+      doc.text("wall art over the last 30 days. Buyer wishlisting for eco-friendly", margin, y); y += 6;
+      doc.text("natural dyes has surged 45% in urban metro regions.", margin, y); y += 12;
 
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", `KRIYO_Intelligence_Report_${new Date().getTime()}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("REGIONAL INTELLIGENCE", margin, y); y += 8;
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text("Important artisan corridors experiencing growth:", margin, y); y += 6;
+      doc.text("- Bihar (Mithila Art): High institutional demand.", margin, y); y += 6;
+      doc.text("- West Bengal (Kantha): Rising B2B procurement.", margin, y); y += 12;
+
+      if (y > 250) {
+        doc.addPage();
+        y = margin;
+      }
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("PRODUCT INTELLIGENCE", margin, y); y += 8;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text("Top-performing products include Kanchipuram Silk and Dokra castings.", margin, y); y += 6;
+      doc.text("Average conversion rate across GI-authenticated items increased to 4.2%.", margin, y); y += 12;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("RISK & REVIVAL", margin, y); y += 8;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text("8 Crafts are currently marked as CRITICAL.", margin, y); y += 6;
+      doc.text("Intervention signals suggest immediate digital enablement for declining", margin, y); y += 6;
+      doc.text("craft clusters in Jammu & Kashmir.", margin, y); y += 12;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("RECOMMENDED ACTIONS", margin, y); y += 8;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text("1. Increase visibility for high-performing Madhubani products.", margin, y); y += 6;
+      doc.text("2. Launch 'Apprenticeship Support' intervention for Kullu Shawls.", margin, y); y += 6;
+      doc.text("3. Disburse targeted fair-trade grants to critical weavers.", margin, y); y += 12;
+
+      doc.line(margin, y, pageWidth - margin, y);
+
+      const dateStr = new Date().toISOString().split('T')[0];
+      doc.save(`KRIYO_Intelligence_Report_${dateStr}.pdf`);
       
       showToast("Intelligence report exported successfully.");
     } catch (error) {
+      console.error(error);
       showToast("Unable to export intelligence report.");
     } finally {
       setIsExporting(false);
@@ -174,7 +258,7 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({ onRefresh, metrics }
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#B8794A] to-[#965C34] text-white text-xs font-bold hover:brightness-105 shadow-md transition-all active:scale-95 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isExporting ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-              <span>{isExporting ? "Generating..." : "Export Intelligence"}</span>
+              <span>{isExporting ? "Generating Report..." : "Export Intelligence"}</span>
             </button>
           </div>
         </div>

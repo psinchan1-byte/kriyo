@@ -21,8 +21,8 @@ export default async function RootLayout({
 
   if (isLoginPage) {
     return (
-      <html lang="en" className="light">
-        <body className="antialiased min-h-screen bg-[#FFFFFF] font-sans">
+      <html lang="en" className="light" suppressHydrationWarning>
+        <body suppressHydrationWarning className="antialiased min-h-screen bg-[#FFFFFF] font-sans">
           {children}
         </body>
       </html>
@@ -30,8 +30,8 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en" className="light">
-      <body className="antialiased h-screen overflow-hidden text-earth-dark relative font-sans">
+    <html lang="en" className="light" suppressHydrationWarning>
+      <body suppressHydrationWarning className="antialiased h-screen overflow-hidden text-earth-dark relative font-sans">
         {/* Render fixed decorative background first */}
         <HeritageArtworkBackground />
 

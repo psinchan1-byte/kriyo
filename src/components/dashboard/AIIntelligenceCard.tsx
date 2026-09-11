@@ -11,6 +11,9 @@ import {
   X,
   Zap,
 } from "lucide-react";
+import { DemandTrendChart } from "./charts/DemandTrendChart";
+import { DemandDriversChart } from "./charts/DemandDriversChart";
+import { RegionalDemandChart } from "./charts/RegionalDemandChart";
 
 export const AIIntelligenceCard: React.FC = () => {
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
@@ -150,22 +153,8 @@ export const AIIntelligenceCard: React.FC = () => {
                 <h4 className="text-[11px] font-mono uppercase text-[#9A887C] font-bold mb-3 tracking-widest border-b border-[#B96D43]/15 pb-1">
                   B. Demand Trend (Last 30 Days)
                 </h4>
-                <div className="mt-4 bg-white/60 p-4 rounded-xl border border-[#B96D43]/10">
-                  <div className="flex items-end gap-1 h-32 w-full pt-4">
-                    {[12, 14, 15, 13, 18, 22, 28, 35, 42, 48, 55, 62, 70, 75, 82].map((val, idx) => (
-                      <div key={idx} className="flex-1 flex flex-col justify-end group">
-                        <div 
-                          className="bg-gradient-to-t from-[#B96D43] to-[#D69A70] rounded-t-sm w-full transition-all group-hover:brightness-110" 
-                          style={{ height: `${val}%` }}
-                        ></div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex justify-between mt-2 text-[10px] text-[#6E5D53] font-mono">
-                    <span>30 days ago</span>
-                    <span>Demand Index (Up 34%)</span>
-                    <span>Today</span>
-                  </div>
+                <div className="mt-4">
+                  <DemandTrendChart />
                 </div>
               </section>
 
@@ -174,23 +163,8 @@ export const AIIntelligenceCard: React.FC = () => {
                 <h4 className="text-[11px] font-mono uppercase text-[#9A887C] font-bold mb-3 tracking-widest border-b border-[#B96D43]/15 pb-1">
                   C. Key Drivers
                 </h4>
-                <div className="space-y-4 bg-white/60 p-4 rounded-xl border border-[#B96D43]/10">
-                  {[
-                    { label: "Search Volume", val: 85, metric: "+42%" },
-                    { label: "Buyer Saves/Wishlists", val: 75, metric: "+38%" },
-                    { label: "Festival Demand", val: 65, metric: "+25%" },
-                    { label: "Regional Interest (NCR/BLR)", val: 90, metric: "+55%" }
-                  ].map((driver, i) => (
-                    <div key={i}>
-                      <div className="flex justify-between text-xs text-[#49372A] font-semibold mb-1">
-                        <span>{driver.label}</span>
-                        <span className="text-[#3F7A61]">{driver.metric}</span>
-                      </div>
-                      <div className="w-full bg-[#EFE6D7] rounded-full h-2">
-                        <div className="bg-[#3F7A61] h-2 rounded-full" style={{ width: `${driver.val}%` }}></div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="mt-4">
+                  <DemandDriversChart />
                 </div>
               </section>
 
@@ -199,26 +173,8 @@ export const AIIntelligenceCard: React.FC = () => {
                 <h4 className="text-[11px] font-mono uppercase text-[#9A887C] font-bold mb-3 tracking-widest border-b border-[#B96D43]/15 pb-1">
                   D. Regional Analysis
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    { region: "Delhi NCR", val: 35 },
-                    { region: "Mumbai", val: 25 },
-                    { region: "Bengaluru", val: 20 },
-                    { region: "West Bengal", val: 12 },
-                    { region: "Bihar (Local)", val: 8 }
-                  ].map((reg, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-white/60 p-2.5 rounded-lg border border-[#B96D43]/10">
-                      <div className="w-8 h-8 rounded-full bg-[#B96D43]/15 flex items-center justify-center text-[#B96D43] font-bold text-xs shrink-0">
-                        {reg.val}%
-                      </div>
-                      <div className="flex-1">
-                        <span className="text-xs font-bold text-[#49372A]">{reg.region}</span>
-                        <div className="w-full bg-[#EFE6D7] rounded-full h-1.5 mt-1">
-                          <div className="bg-[#B96D43] h-1.5 rounded-full" style={{ width: `${reg.val}%` }}></div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="mt-4">
+                  <RegionalDemandChart />
                 </div>
               </section>
 

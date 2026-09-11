@@ -29,7 +29,7 @@ export interface RevivalIntelligenceItem {
   region: string;
   endangermentLevel: "Critical" | "High" | "Moderate";
   activeMastersCount: number;
-  revivalPlanStatus: "Assessment" | "Active Intervention" | "Stabilized";
+  revivalPlanStatus: string;
   interventionTimeline?: string;
   budgetAllocatedINR?: number;
 }
